@@ -3,6 +3,8 @@
 A KDE Connect protocol-compatible Android client, written in Kotlin with Jetpack Compose (Material 3).
 Works with the stock `kdeconnect-kde` desktop daemon (protocol 8). Not affiliated with KDE.
 
+**[Download the latest APK](https://github.com/aryansoni57/tandem/releases/latest/download/Tandem-v0.1.0-debug.apk)** (debug-signed; allow installs from unknown sources) · [All releases](https://github.com/aryansoni57/tandem/releases)
+
 Status: Phases 0 to 13 are implemented in code (scaffold, pairing, ping, battery, clipboard, share, notification sync, remote input, media control, presenter, run commands, find my phone, telephony, SMS, SFTP). Phases 3, 4, 6, 7, 8, 9, 10, 11, 12 and 13 are not yet run against a real desktop. See `PLAN.md`.
 
 ## Modules

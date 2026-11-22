@@ -1,0 +1,24 @@
+# Reference repositories are read-only inputs, never part of this project's history.
+reference/
+
+# Gradle and build output
+.gradle/
+build/
+**/build/
+.kotlin/
+*.iml
+.idea/
+captures/
+.cxx/
+
+# Local machine configuration (SDK path, signing)
+local.properties
+*.jks
+*.keystore
+
+# OS and editor noise
+.DS_Store
+*.swp
+
+# Scratch: logs, captures, received personal files
+tmp/

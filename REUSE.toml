@@ -1,0 +1,13 @@
+version = 1
+
+[[annotations]]
+path = ["**/*.kt", "**/*.kts", "**/*.xml", "**/*.toml", "**/*.py", "**/*.yml", "**/*.html"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Tandem contributors"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+[[annotations]]
+path = ["LICENSE", "gradle/wrapper/**", "gradlew", "gradlew.bat", ".gitignore", ".editorconfig", "README.md"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Tandem contributors"
+SPDX-License-Identifier = "GPL-3.0-or-later"

@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tandem for Android</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Layout: left column lists screens, right column holds one live Android device (Material 3 surfaces, bottom nav, sheets). */
+:root{
+  --page:#E4EAE7; --bg:#F4F8F6; --surf:#FFFFFF; --surf2:#E8EFEC; --surf3:#DCE5E1; --line:#C9D4CF;
+  --fg:#111C18; --muted:#55665F; --pri:#006B5A; --on-pri:#FFFFFF; --pri-c:#B8EFDF; --on-pri-c:#00201A;
+  --warn:#B3261E; --warn-c:#F9DEDC; --ok:#2B7A33; --frame:#1B2421;
+  --display:"Space Grotesk",system-ui,sans-serif; --body:"Roboto",system-ui,sans-serif; --mono:"Roboto Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root{
+  --page:#080D0B; --bg:#0F1513; --surf:#171E1B; --surf2:#1F2825; --surf3:#28332F; --line:#34413C;
+  --fg:#DDE7E2; --muted:#93A69E; --pri:#7DD8C1; --on-pri:#00382E; --pri-c:#005143; --on-pri-c:#B8EFDF;
+  --warn:#F2B8B5; --warn-c:#601410; --ok:#7BCB83; --frame:#2A3632; color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--page);color:var(--fg);font:14px/1.45 var(--body);padding:32px max(16px,env(safe-area-inset-left)) 48px max(16px,env(safe-area-inset-right))}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
+.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.mono{font-family:var(--mono);font-size:12px}
+.muted{color:var(--muted)}
+
+.wrap{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 392px;gap:48px;align-items:start}
+.intro h1{font:600 34px/1.1 var(--display);margin:0 0 10px;letter-spacing:-.02em}
+.intro p{margin:0 0 24px;color:var(--muted);max-width:52ch;font-size:15px}
+.jump{display:grid;gap:6px}
+.jump .lbl{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:500;margin:14px 0 2px}
+.jump button{display:flex;gap:12px;align-items:center;text-align:left;padding:10px 14px;border-radius:14px;background:var(--surf);border:1px solid var(--line)}
+.jump button:hover{border-color:var(--pri)}
+.jump button[aria-current="true"]{background:var(--pri-c);color:var(--on-pri-c);border-color:transparent}
+.jump b{font-weight:500;display:block}
+.jump span{font-size:12px;color:var(--muted)}
+.jump button[aria-current="true"] span{color:inherit;opacity:.8}
+
+/* device */
+.device{position:sticky;top:24px;width:100%;max-width:392px;height:820px;border-radius:46px;background:var(--frame);padding:12px;box-shadow:0 30px 60px -20px rgba(0,0,0,.35)}
+.screen{position:relative;height:100%;border-radius:36px;overflow:hidden;background:var(--bg);display:flex;flex-direction:column}
+.status{display:flex;justify-content:space-between;align-items:center;padding:10px 22px 4px;font-size:13px;font-weight:500;flex:none}
+.status .cam{width:12px;height:12px;border-radius:50%;background:var(--frame)}
+.status .r{display:flex;gap:6px;align-items:center}
+.status .ic{width:15px;height:15px}
+.appbar{display:flex;align-items:center;gap:8px;padding:8px 16px 8px 20px;flex:none}
+.appbar h2{font:500 22px var(--display);margin:0;flex:1}
+.ib{width:40px;height:40px;border-radius:50%;display:grid;place-items:center}
+.ib:hover{background:var(--surf2)}
+.body{flex:1;overflow-y:auto;padding:4px 16px 24px;scrollbar-width:none}
+.body::-webkit-scrollbar{display:none}
+.scr{display:none}.scr.on{display:grid;gap:12px}
+
+.navbar{flex:none;display:grid;grid-template-columns:repeat(4,1fr);background:var(--surf2);padding:12px 4px 4px}
+.navbar button{display:grid;justify-items:center;gap:4px;font-size:12px;font-weight:500;color:var(--muted)}
+.navbar .pill{width:64px;height:32px;border-radius:16px;display:grid;place-items:center;position:relative}
+.navbar button[aria-selected="true"]{color:var(--fg)}
+.navbar button[aria-selected="true"] .pill{background:var(--pri-c);color:var(--on-pri-c)}
+.navbar .dotb{position:absolute;top:2px;right:14px;min-width:16px;height:16px;border-radius:8px;background:var(--warn);color:var(--surf);font-size:10px;display:grid;place-items:center;padding:0 4px}
+.gesture{flex:none;height:22px;background:var(--surf2);display:grid;place-items:center}
+.gesture i{width:108px;height:4px;border-radius:2px;background:var(--fg);opacity:.5}
+
+/* components */
+.card{background:var(--surf);border-radius:20px;padding:16px}
+.card.tonal{background:var(--pri-c);color:var(--on-pri-c)}
+.card h3{font:500 15px var(--body);margin:0 0 10px}
+.ttl{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;padding:6px 4px 0}
+.row{display:flex;gap:12px;align-items:center}
+.sp{margin-left:auto}
+.av{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--surf2);flex:none}
+.av.pri{background:var(--pri);color:var(--on-pri)}
+.li{display:flex;gap:14px;align-items:center;padding:10px 0;min-width:0}
+.li+.li{border-top:1px solid var(--surf3)}
+.li .t{flex:1;min-width:0}
+.li .t b{display:block;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.li .t span{font-size:12px;color:var(--muted);display:block}
+.li .av{width:40px;height:40px;border-radius:50%}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qa{display:grid;gap:10px;justify-items:start;padding:14px;border-radius:20px;background:var(--surf);text-align:left}
+.qa .av{width:40px;height:40px;border-radius:12px;background:var(--pri-c);color:var(--on-pri-c)}
+.qa b{font-weight:500}
+.qa span{font-size:12px;color:var(--muted);margin-top:-8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 20px;border-radius:20px;font-weight:500}
+.btn.fill{background:var(--pri);color:var(--on-pri)}
+.btn.tone{background:var(--pri-c);color:var(--on-pri-c)}
+.btn.out{border:1px solid var(--line);color:var(--pri)}
+.btn.err{background:var(--warn);color:var(--surf)}
+.btn.sm{height:32px;padding:0 14px;font-size:13px}
+.btn .ic{width:18px;height:18px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px;border-radius:8px;border:1px solid var(--line);font-size:12px;font-weight:500}
+.chip.on{background:var(--pri-c);border-color:transparent;color:var(--on-pri-c)}
+.chip .ic{width:15px;height:15px}
+.sw{position:relative;width:52px;height:32px;border-radius:16px;background:var(--surf3);border:2px solid var(--muted);flex:none;transition:.15s}
+.sw::after{content:"";position:absolute;top:6px;left:6px;width:16px;height:16px;border-radius:50%;background:var(--muted);transition:.15s}
+.sw[aria-checked="true"]{background:var(--pri);border-color:var(--pri)}
+.sw[aria-checked="true"]::after{left:24px;top:2px;width:24px;height:24px;background:var(--on-pri)}
+input[type=text]{width:100%;height:48px;padding:0 16px;border-radius:12px;border:1px solid var(--line);background:var(--surf)}
+input[type=text]:focus{outline:2px solid var(--pri);border-color:transparent}
+.prog{height:4px;border-radius:2px;background:var(--surf3);margin-top:6px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--pri);transition:width .3s}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.seg button{height:40px;font-size:13px;font-weight:500;border-left:1px solid var(--line)}
+.seg button:first-child{border-left:0}
+.seg button[aria-selected="true"]{background:var(--pri-c);color:var(--on-pri-c)}
+.sub{display:none;gap:12px}.sub.on{display:grid}
+.hero{display:grid;gap:14px}
+.hero .big{font:600 26px/1.15 var(--display)}
+.bat{height:8px;border-radius:4px;background:color-mix(in srgb,var(--on-pri-c) 18%,transparent);overflow:hidden}
+.bat i{display:block;height:100%;background:var(--on-pri-c);border-radius:4px}
+.pulse{width:10px;height:10px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 var(--ok);animation:pl 2s infinite}
+@keyframes pl{70%{box-shadow:0 0 0 8px transparent}}
+
+/* remote */
+.pad{position:relative;height:300px;border-radius:24px;background:var(--surf);border:1px solid var(--line);touch-action:none;overflow:hidden;display:grid;place-items:center;color:var(--muted);font-size:13px;text-align:center;cursor:crosshair}
+.pad .scroll{position:absolute;right:8px;top:16px;bottom:16px;width:6px;border-radius:3px;background:var(--surf3)}
+.ripple{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;background:var(--pri);opacity:.25;pointer-events:none;animation:rp .5s forwards}
+@keyframes rp{from{transform:scale(.3)}to{transform:scale(1.4);opacity:0}}
+.mbtn{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mbtn button{height:52px;border-radius:16px;background:var(--surf);font-weight:500}
+.mbtn button:active{background:var(--pri-c)}
+.cover{aspect-ratio:1;max-height:220px;width:100%;border-radius:24px;background:linear-gradient(150deg,var(--pri),#0d3d35 70%);display:grid;place-items:center;color:#d8f5ec}
+.cover .ic{width:64px;height:64px;stroke-width:1.4}
+.ctrls{display:flex;justify-content:center;align-items:center;gap:20px}
+.rb{width:56px;height:56px;border-radius:50%;background:var(--surf2);display:grid;place-items:center}
+.rb.big{width:76px;height:76px;border-radius:24px;background:var(--pri);color:var(--on-pri)}
+.rb.big .ic{width:30px;height:30px}
+input[type=range]{width:100%;accent-color:var(--pri)}
+.aim{height:240px;border-radius:120px 120px 24px 24px;background:radial-gradient(circle at 50% 60%,var(--pri-c),var(--surf) 70%);display:grid;place-items:center;user-select:none;touch-action:none;text-align:center;font-weight:500}
+.aim.hold{background:radial-gradient(circle at 50% 60%,#ff6b5a55,var(--surf) 70%)}
+.aim .ic{width:40px;height:40px;display:block;margin:0 auto 6px}
+.cmd{display:flex;align-items:center;gap:14px;padding:14px;border-radius:20px;background:var(--surf);text-align:left;width:100%}
+.cmd .av{border-radius:14px;background:var(--pri-c);color:var(--on-pri-c)}
+.cmd.danger .av{background:var(--warn-c);color:var(--warn)}
+.cmd.confirm{outline:2px solid var(--warn)}
+
+/* overlays */
+.scrim{position:absolute;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:.2s;z-index:20}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surf);border-radius:28px 28px 0 0;padding:10px 20px 34px;transform:translateY(105%);transition:transform .28s cubic-bezier(.2,.8,.2,1);z-index:21}
+.sheet.on{transform:none}
+.sheet .grab{width:32px;height:4px;border-radius:2px;background:var(--muted);opacity:.5;margin:0 auto 18px}
+.sheet h3{font:500 20px var(--display);margin:0 0 4px}
+.shade{position:absolute;inset:0;z-index:22;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(14px);padding:44px 14px 20px;transform:translateY(-102%);transition:transform .3s cubic-bezier(.2,.8,.2,1);display:grid;align-content:start;gap:12px}
+.shade.on{transform:none}
+.qs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tile{display:flex;align-items:center;gap:10px;height:64px;padding:0 14px;border-radius:20px;background:var(--surf3);text-align:left}
+.tile.on{background:var(--pri);color:var(--on-pri)}
+.tile b{display:block;font-weight:500;font-size:13px}
+.tile span{font-size:11px;opacity:.8}
+.notif{background:var(--surf);border-radius:24px;padding:14px 16px;display:grid;gap:10px}
+.notif .acts{display:flex;gap:18px;padding-left:34px}
+.notif .acts button{color:var(--pri);font-weight:500;font-size:13px}
+.ringscr{position:absolute;inset:0;z-index:23;background:var(--pri);color:var(--on-pri);display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center}
+.ringscr.on{display:flex}
+.ringscr .bell{width:120px;height:120px;border-radius:50%;background:color-mix(in srgb,var(--on-pri) 15%,transparent);display:grid;place-items:center;animation:sh .5s infinite}
+.ringscr .bell .ic{width:54px;height:54px}
+@keyframes sh{25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+.ringscr .btn{background:var(--on-pri);color:var(--pri)}
+.snack{position:absolute;left:12px;right:12px;bottom:96px;z-index:30;background:var(--fg);color:var(--bg);border-radius:8px;padding:14px 16px;font-size:14px;opacity:0;transform:translateY(10px);transition:.2s;pointer-events:none}
+.snack.on{opacity:1;transform:none}
+.fab{position:absolute;right:18px;bottom:110px;height:56px;padding:0 20px;border-radius:16px;background:var(--pri-c);color:var(--on-pri-c);display:flex;align-items:center;gap:10px;font-weight:500;box-shadow:0 4px 10px rgba(0,0,0,.18);z-index:5}
+.fp{font-family:var(--mono);font-size:12px;background:var(--surf2);padding:10px 12px;border-radius:12px;line-height:1.7;word-break:break-all}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:minmax(0,1fr);gap:24px}
+  .device{position:relative;top:0;margin:0 auto}
+  .jump{display:flex;overflow-x:auto;gap:8px;padding-bottom:4px}
+  .jump .lbl{display:none}
+  .jump button{flex:none}
+  .jump span{display:none}
+}
+@media (max-width:420px){
+  body{padding-top:16px}
+  .device{height:760px;padding:8px;border-radius:40px}
+  .screen{border-radius:32px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol>
+<symbol id="i-swap" viewBox="0 0 24 24"><path d="M7 4v14M3 14l4 4 4-4M17 20V6M13 10l4-4 4 4"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21a2 2 0 0 0 4 0"/></symbol>
+<symbol id="i-remote" viewBox="0 0 24 24"><path d="M5 3l14 7-6 2-2 6z"/></symbol>
+<symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5"/></symbol>
+<symbol id="i-img" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 9"/></symbol>
+<symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></symbol>
+<symbol id="i-clip" viewBox="0 0 24 24"><rect x="8" y="3" width="8" height="4" rx="1"/><path d="M16 5h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2"/></symbol>
+<symbol id="i-msg" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></symbol>
+<symbol id="i-call" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 14l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></symbol>
+<symbol id="i-kbd" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></symbol>
+<symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol>
+<symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 4v16M16 4v16"/></symbol>
+<symbol id="i-prev" viewBox="0 0 24 24"><path d="M19 4L9 12l10 8zM5 5v14"/></symbol>
+<symbol id="i-next" viewBox="0 0 24 24"><path d="M5 4l10 8-10 8zM19 5v14"/></symbol>
+<symbol id="i-vol" viewBox="0 0 24 24"><path d="M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 0 1 0 7"/></symbol>
+<symbol id="i-term" viewBox="0 0 24 24"><path d="M4 17l6-5-6-5M12 19h8"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/></symbol>
+<symbol id="i-power" viewBox="0 0 24 24"><path d="M12 2v10M6.4 6.4a8 8 0 1 0 11.2 0"/></symbol>
+<symbol id="i-ring" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8a6 6 0 0 1 0 8.4M7.8 16.2a6 6 0 0 1 0-8.4M19 5a10 10 0 0 1 0 14M5 19A10 10 0 0 1 5 5"/></symbol>
+<symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0M12 19.5h.01"/></symbol>
+<symbol id="i-bat" viewBox="0 0 24 24"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2"/><rect x="4" y="9" width="11" height="6" rx="1" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+<symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0-1.1-2.7H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 2.7-1.1V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+</defs></svg>
+
+<div class="wrap">
+  <section class="intro">
+    <h1>Tandem for Android</h1>
+    <p>The phone side of Tandem. Pick a screen below, or tap around inside the device. Pull the status bar down to see the always-on notification and Quick Settings tile.</p>
+    <div class="jump" id="jump">
+      <div class="lbl">App</div>
+      <button data-j="home" aria-current="true"><svg class="ic"><use href="#i-home"/></svg><div><b>Home</b><span>Connected laptop, quick actions</span></div></button>
+      <button data-j="share"><svg class="ic"><use href="#i-swap"/></svg><div><b>Share</b><span>Files, links, clipboard, storage access</span></div></button>
+      <button data-j="sync"><svg class="ic"><use href="#i-bell"/></svg><div><b>Sync</b><span>Notifications, SMS, call alerts</span></div></button>
+      <button data-j="remote:pad"><svg class="ic"><use href="#i-remote"/></svg><div><b>Trackpad &amp; keyboard</b><span>Move the laptop cursor and type</span></div></button>
+      <button data-j="remote:media"><svg class="ic"><use href="#i-music"/></svg><div><b>Media &amp; volume</b><span>Control what plays on the laptop</span></div></button>
+      <button data-j="remote:present"><svg class="ic"><use href="#i-ring"/></svg><div><b>Presentation remote</b><span>Point by moving the phone</span></div></button>
+      <button data-j="remote:cmds"><svg class="ic"><use href="#i-term"/></svg><div><b>Run commands</b><span>Lock, suspend, shut down</span></div></button>
+      <button data-j="settings"><svg class="ic"><use href="#i-shield"/></svg><div><b>Connection</b><span>Wi‑Fi, OpenVPN, encryption</span></div></button>
+      <div class="lbl">System</div>
+      <button data-j="sheet"><svg class="ic"><use href="#i-send"/></svg><div><b>Share sheet</b><span>“Send to laptop” from any app</span></div></button>
+      <button data-j="shade"><svg class="ic"><use href="#i-down"/></svg><div><b>Notification shade</b><span>Persistent notification, QS tile</span></div></button>
+      <button data-j="ring"><svg class="ic"><use href="#i-bell"/></svg><div><b>Find my phone</b><span>Full-screen ring from the laptop</span></div></button>
+    </div>
+  </section>
+
+  <div class="device">
+    <div class="screen" id="screen">
+      <div class="status" id="statusbar" title="Tap to open the notification shade"><span>9:41</span><span class="cam"></span><span class="r"><svg class="ic"><use href="#i-wifi"/></svg><svg class="ic"><use href="#i-bat"/></svg>82%</span></div>
+      <div class="appbar"><button class="ib" id="backBtn" hidden aria-label="Back"><svg class="ic"><use href="#i-back"/></svg></button><h2 id="appTitle">Tandem</h2><button class="ib" data-nav="settings" aria-label="Connection settings"><svg class="ic"><use href="#i-gear"/></svg></button></div>
+
+      <div class="body" id="body">
+        <!-- HOME -->
+        <div class="scr on" data-s="home">
+          <div class="card tonal hero">
+            <div class="row"><div class="av pri"><svg class="ic"><use href="#i-laptop"/></svg></div><div><div class="row" style="gap:8px"><span class="pulse"></span><span style="font-size:13px">Connected · Home‑5G</span></div><div class="big">Aryan’s laptop</div></div></div>
+            <div><div class="row" style="font-size:13px;margin-bottom:6px"><span>Laptop battery</span><span class="sp mono">64% · charging</span></div><div class="bat"><i style="width:64%"></i></div></div>
+          </div>
+          <div class="grid2">
+            <button class="qa" data-sheet><span class="av"><svg class="ic"><use href="#i-file"/></svg></span><b>Send files</b><span>Photos, docs, anything</span></button>
+            <button class="qa" data-snack="Clipboard sent to laptop"><span class="av"><svg class="ic"><use href="#i-clip"/></svg></span><b>Send clipboard</b><span>Paste it on the laptop</span></button>
+            <button class="qa" data-nav="remote:pad"><span class="av"><svg class="ic"><use href="#i-remote"/></svg></span><b>Trackpad</b><span>Mouse &amp; keyboard</span></button>
+            <button class="qa" data-nav="remote:media"><span class="av"><svg class="ic"><use href="#i-music"/></svg></span><b>Media</b><span>Night Drive · playing</span></button>
+            <button class="qa" data-nav="remote:present"><span class="av"><svg class="ic"><use href="#i-ring"/></svg></span><b>Presenter</b><span>Slides &amp; pointer</span></button>
+            <button class="qa" data-nav="remote:cmds"><span class="av"><svg class="ic"><use href="#i-term"/></svg></span><b>Commands</b><span>Lock, suspend…</span></button>
+          </div>
+          <div class="ttl">Recent</div>
+          <div class="card" style="padding-block:6px">
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-img"/></svg></span><div class="t"><b>IMG_2041.jpg sent</b><span>4.2 MB · 9:41</span></div></div>
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-msg"/></svg></span><div class="t"><b>Replied to Maya from laptop</b><span>“Yes! Leaving at 6:30.” · 9:35</span></div></div>
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-file"/></svg></span><div class="t"><b>project-brief.pdf received</b><span>Saved to Downloads · 9:20</span></div></div>
+          </div>
+        </div>
+
+        <!-- SHARE -->
+        <div class="scr" data-s="share">
+          <div class="card">
+            <h3>Send a link</h3>
+            <div class="row"><input type="text" id="linkIn" value="https://maps.example.com/cafe-lumen" aria-label="Link"><button class="btn fill" id="linkSend" aria-label="Send link" style="padding:0 14px"><svg class="ic"><use href="#i-send"/></svg></button></div>
+          </div>
+          <div class="ttl">Transfers</div>
+          <div class="card" style="padding-block:6px" id="xfers">
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-file"/></svg></span><div class="t"><b>VID_0318.mp4</b><span id="vidMeta">To laptop · 212 MB</span><div class="prog"><i id="vidP" style="width:38%"></i></div></div></div>
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-file"/></svg></span><div class="t"><b>project-brief.pdf</b><span>From laptop · 2.8 MB</span></div><svg class="ic" style="color:var(--ok)"><use href="#i-check"/></svg></div>
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-img"/></svg></span><div class="t"><b>IMG_2041.jpg</b><span>To laptop · 4.2 MB</span></div><svg class="ic" style="color:var(--ok)"><use href="#i-check"/></svg></div>
+          </div>
+          <div class="ttl">Shared clipboard</div>
+          <div class="card" style="padding-block:6px">
+            <div class="li"><div class="t"><b>Auto‑sync clipboard</b><span>Copy here, paste on the laptop</span></div><button class="sw" role="switch" aria-checked="true" aria-label="Auto-sync clipboard"></button></div>
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-laptop"/></svg></span><div class="t"><b>npm i @tandem/cli</b><span>From laptop · 9:10</span></div><button class="btn sm out" data-snack="Copied">Copy</button></div>
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-clip"/></svg></span><div class="t"><b>Gate B14, boarding 18:20</b><span>From this phone · 9:38</span></div><button class="btn sm out" data-snack="Copied">Copy</button></div>
+          </div>
+          <div class="ttl">Storage</div>
+          <div class="card" style="padding-block:6px">
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-folder"/></svg></span><div class="t"><b>Let laptop browse files</b><span>Mounted on the laptop as ~/Phone</span></div><button class="sw" role="switch" aria-checked="true" aria-label="Allow file browsing"></button></div>
+            <div class="li"><div class="t"><b>Shared folders</b><span>DCIM · Download · Documents · Music</span></div><button class="btn sm out">Edit</button></div>
+          </div>
+          <div style="height:64px"></div>
+        </div>
+
+        <!-- SYNC -->
+        <div class="scr" data-s="sync">
+          <div class="card" style="padding-block:6px">
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-bell"/></svg></span><div class="t"><b>Show notifications on laptop</b><span>Reply to messages from the laptop</span></div><button class="sw" role="switch" aria-checked="true" aria-label="Notification sync"></button></div>
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-msg"/></svg></span><div class="t"><b>Text from laptop (SMS)</b><span>Send and read texts on the laptop</span></div><button class="sw" role="switch" aria-checked="true" aria-label="SMS"></button></div>
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-call"/></svg></span><div class="t"><b>Call alerts</b><span>Show who’s calling · mute ringer remotely</span></div><button class="sw" role="switch" aria-checked="true" aria-label="Call alerts"></button></div>
+          </div>
+          <div class="ttl">Apps that sync</div>
+          <div class="row" style="flex-wrap:wrap;gap:8px"><button class="chip on" data-chip>All</button><button class="chip" data-chip>Messaging</button><button class="chip" data-chip>Work</button></div>
+          <div class="card" style="padding-block:6px">
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-msg"/></svg></span><div class="t"><b>Messages</b><span>Reply enabled</span></div><button class="sw" role="switch" aria-checked="true" aria-label="Messages"></button></div>
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-mail"/></svg></span><div class="t"><b>Mail</b><span>Preview only</span></div><button class="sw" role="switch" aria-checked="true" aria-label="Mail"></button></div>
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-cal"/></svg></span><div class="t"><b>Calendar</b><span>Reminders</span></div><button class="sw" role="switch" aria-checked="true" aria-label="Calendar"></button></div>
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-lock"/></svg></span><div class="t"><b>Bank</b><span>Hidden for privacy</span></div><button class="sw" role="switch" aria-checked="false" aria-label="Bank"></button></div>
+          </div>
+          <div class="ttl">Sent from the laptop today</div>
+          <div class="card" style="padding-block:6px">
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-msg"/></svg></span><div class="t"><b>To Maya Rao</b><span>“Yes! Leaving at 6:30.” · SMS</span></div></div>
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-call"/></svg></span><div class="t"><b>Ringer muted</b><span>Call from +91 98123 45678</span></div></div>
+          </div>
+        </div>
+
+        <!-- REMOTE -->
+        <div class="scr" data-s="remote">
+          <div class="seg" role="tablist">
+            <button data-sub="pad" aria-selected="true">Trackpad</button>
+            <button data-sub="media" aria-selected="false">Media</button>
+            <button data-sub="present" aria-selected="false">Present</button>
+            <button data-sub="cmds" aria-selected="false">Run</button>
+          </div>
+          <div class="sub on" data-sub-p="pad">
+            <div class="pad" id="pad"><div>Slide one finger to move<br>Tap to click · two fingers to scroll</div><span class="scroll"></span></div>
+            <div class="mbtn"><button data-snack="Left click">Left</button><button data-snack="Right click">Right</button></div>
+            <div class="row"><input type="text" id="kbd" placeholder="Type on laptop…" aria-label="Type on laptop"><button class="btn tone" style="padding:0 14px" aria-label="Keyboard"><svg class="ic"><use href="#i-kbd"/></svg></button></div>
+            <div class="row muted" style="font-size:12px"><span>Pointer speed</span><input type="range" min="1" max="10" value="6" aria-label="Pointer speed" style="flex:1"></div>
+          </div>
+          <div class="sub" data-sub-p="media">
+            <div class="cover"><svg class="ic"><use href="#i-music"/></svg></div>
+            <div style="text-align:center"><div style="font:600 20px var(--display)">Night Drive</div><div class="muted">Kora Lane · Browser on laptop</div></div>
+            <div><input type="range" id="seek" min="0" max="100" value="32" aria-label="Seek"><div class="row mono muted"><span id="tCur">1:12</span><span class="sp">3:45</span></div></div>
+            <div class="ctrls"><button class="rb" aria-label="Previous"><svg class="ic"><use href="#i-prev"/></svg></button><button class="rb big" id="play" aria-label="Play or pause"><svg class="ic" id="playIc"><use href="#i-pause"/></svg></button><button class="rb" aria-label="Next"><svg class="ic"><use href="#i-next"/></svg></button></div>
+            <div class="card row"><svg class="ic"><use href="#i-vol"/></svg><input type="range" id="vol" min="0" max="100" value="55" aria-label="Laptop volume"><span class="mono" id="volN" style="width:24px">55</span></div>
+            <div class="row" style="gap:8px;flex-wrap:wrap"><span class="muted" style="font-size:12px">Player</span><button class="chip on" data-chip>Browser</button><button class="chip" data-chip>Video player</button></div>
+          </div>
+          <div class="sub" data-sub-p="present">
+            <div class="card row"><span class="av pri"><svg class="ic"><use href="#i-laptop"/></svg></span><div class="t" style="flex:1"><b style="font-weight:500">Q4 roadmap.pdf</b><div class="muted" style="font-size:12px">Slide <span id="sN">2</span> of 12 · 07:12</div></div></div>
+            <div class="aim" id="aim"><div><svg class="ic"><use href="#i-ring"/></svg>Hold to show pointer<div class="muted" style="font-size:12px;font-weight:400">then move the phone to aim</div></div></div>
+            <div class="grid2"><button class="btn tone" style="height:64px;border-radius:20px" id="sPrev"><svg class="ic"><use href="#i-prev"/></svg>Back</button><button class="btn fill" style="height:64px;border-radius:20px" id="sNext">Next<svg class="ic"><use href="#i-next"/></svg></button></div>
+            <div class="row muted" style="font-size:12px;justify-content:center">Volume keys also change slides</div>
+          </div>
+          <div class="sub" data-sub-p="cmds">
+            <button class="cmd" data-run="Laptop locked"><span class="av"><svg class="ic"><use href="#i-lock"/></svg></span><div class="t" style="flex:1"><b style="font-weight:500">Lock screen</b><div class="mono muted">loginctl lock-session</div></div></button>
+            <button class="cmd" data-run="Laptop suspending"><span class="av"><svg class="ic"><use href="#i-moon"/></svg></span><div class="t" style="flex:1"><b style="font-weight:500">Suspend</b><div class="mono muted">systemctl suspend</div></div></button>
+            <button class="cmd" data-run="Backup started"><span class="av"><svg class="ic"><use href="#i-term"/></svg></span><div class="t" style="flex:1"><b style="font-weight:500">Start backup</b><div class="mono muted">~/bin/backup.sh --quick</div></div></button>
+            <button class="cmd danger" data-run="Laptop shutting down" data-confirm><span class="av"><svg class="ic"><use href="#i-power"/></svg></span><div class="t" style="flex:1"><b style="font-weight:500" class="lbl">Shut down</b><div class="mono muted">systemctl poweroff</div></div></button>
+            <div class="muted" style="font-size:12px;text-align:center">Commands are set up on the laptop</div>
+          </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div class="scr" data-s="settings">
+          <div class="ttl">Paired devices</div>
+          <div class="card" style="padding-block:6px">
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-laptop"/></svg></span><div class="t"><b>Aryan’s laptop</b><span>Linux · connected</span></div><span class="pulse"></span></div>
+            <div class="li"><span class="av"><svg class="ic"><use href="#i-laptop"/></svg></span><div class="t"><b>Office desktop</b><span>Windows · last seen yesterday</span></div></div>
+            <div class="li"><button class="btn sm out"><svg class="ic"><use href="#i-plus"/></svg>Pair new device</button></div>
+          </div>
+          <div class="ttl">Route</div>
+          <div class="card" style="padding-block:6px" role="radiogroup" aria-label="Route">
+            <button class="li" style="width:100%;text-align:left" data-route aria-checked="true"><span class="av"><svg class="ic"><use href="#i-wifi"/></svg></span><div class="t"><b>Local Wi‑Fi</b><span>Home‑5G · 192.168.1.24 · 4 ms</span></div><span class="rd"></span></button>
+            <button class="li" style="width:100%;text-align:left" data-route aria-checked="false"><span class="av"><svg class="ic"><use href="#i-globe"/></svg></span><div class="t"><b>OpenVPN</b><span>remote-office.ovpn · for other networks</span></div><span class="rd"></span></button>
+          </div>
+          <div class="ttl">Security</div>
+          <div class="card">
+            <div class="row" style="margin-bottom:10px"><svg class="ic" style="color:var(--pri)"><use href="#i-shield"/></svg><b style="font-weight:500">End‑to‑end TLS 1.3</b></div>
+            <div class="fp">A4:7F:19:C2:8B:03:5E:D1<br>90:6A:B7:44:E2:1C:F8:3D</div>
+            <div class="muted" style="font-size:12px;margin-top:8px">Must match the code shown on the laptop.</div>
+          </div>
+          <div class="card" style="padding-block:6px">
+            <div class="li"><div class="t"><b>Report battery to laptop</b><span>Shows level and charging state</span></div><button class="sw" role="switch" aria-checked="true" aria-label="Report battery"></button></div>
+            <div class="li"><div class="t"><b>Allow ringing from laptop</b><span>Rings even on silent</span></div><button class="sw" role="switch" aria-checked="true" aria-label="Allow ringing"></button></div>
+            <div class="li"><div class="t"><b>Browser extension</b><span>Links and media from laptop browser</span></div><button class="sw" role="switch" aria-checked="true" aria-label="Browser extension"></button></div>
+          </div>
+        </div>
+      </div>
+
+      <button class="fab" id="fab" data-sheet hidden><svg class="ic"><use href="#i-send"/></svg>Send files</button>
+
+      <nav class="navbar" role="tablist" aria-label="App sections">
+        <button data-nav="home" aria-selected="true"><span class="pill"><svg class="ic"><use href="#i-home"/></svg></span>Home</button>
+        <button data-nav="share" aria-selected="false"><span class="pill"><svg class="ic"><use href="#i-swap"/></svg></span>Share</button>
+        <button data-nav="sync" aria-selected="false"><span class="pill"><svg class="ic"><use href="#i-bell"/></svg><span class="dotb">3</span></span>Sync</button>
+        <button data-nav="remote:pad" aria-selected="false"><span class="pill"><svg class="ic"><use href="#i-remote"/></svg></span>Remote</button>
+      </nav>
+      <div class="gesture"><i></i></div>
+
+      <!-- overlays -->
+      <div class="scrim" id="scrim"></div>
+      <div class="sheet" id="sheet" role="dialog" aria-label="Send to device">
+        <div class="grab"></div>
+        <h3>Send 3 photos</h3><div class="muted" style="margin-bottom:14px">IMG_2042–2044.jpg · 11.6 MB</div>
+        <div class="li"><span class="av pri"><svg class="ic"><use href="#i-laptop"/></svg></span><div class="t"><b>Aryan’s laptop</b><span>Connected · Wi‑Fi</span></div><button class="btn fill sm" id="sendNow">Send</button></div>
+        <div class="li"><span class="av"><svg class="ic"><use href="#i-laptop"/></svg></span><div class="t"><b>Office desktop</b><span>Not reachable</span></div><button class="btn sm out" disabled style="opacity:.5">Send</button></div>
+      </div>
+      <div class="shade" id="shade">
+        <div class="row" style="padding:0 6px"><span style="font:500 28px var(--display)">9:41</span><span class="sp muted">Thu, 19 Nov</span></div>
+        <div class="qs">
+          <button class="tile on" data-tile><svg class="ic"><use href="#i-wifi"/></svg><div><b>Internet</b><span>Home‑5G</span></div></button>
+          <button class="tile on" data-tile><svg class="ic"><use href="#i-laptop"/></svg><div><b>Tandem</b><span>Aryan’s laptop</span></div></button>
+          <button class="tile" data-tile><svg class="ic"><use href="#i-moon"/></svg><div><b>Do not disturb</b><span>Off</span></div></button>
+          <button class="tile" data-tile><svg class="ic"><use href="#i-clip"/></svg><div><b>Send clipboard</b><span>Tandem</span></div></button>
+        </div>
+        <div class="notif">
+          <div class="row"><svg class="ic" style="width:20px;height:20px;color:var(--pri)"><use href="#i-laptop"/></svg><div class="t" style="flex:1"><b style="font-weight:500">Connected to Aryan’s laptop</b><div class="muted" style="font-size:12px">Tandem · Wi‑Fi · encrypted</div></div></div>
+          <div class="acts"><button data-snack="Clipboard sent">Send clipboard</button><button data-sheet>Send file</button><button data-nav="remote:pad">Trackpad</button></div>
+        </div>
+        <div class="notif">
+          <div class="row"><svg class="ic" style="width:20px;height:20px"><use href="#i-music"/></svg><div class="t" style="flex:1"><b style="font-weight:500">Night Drive · on laptop</b><div class="muted" style="font-size:12px">Kora Lane</div></div><button class="ib" aria-label="Pause" data-snack="Paused on laptop"><svg class="ic"><use href="#i-pause"/></svg></button></div>
+        </div>
+        <div class="notif">
+          <div class="row"><svg class="ic" style="width:20px;height:20px"><use href="#i-file"/></svg><div class="t" style="flex:1"><b style="font-weight:500">project-brief.pdf received</b><div class="muted" style="font-size:12px">From Aryan’s laptop · 2.8 MB</div></div></div>
+          <div class="acts"><button>Open</button><button>Show in folder</button></div>
+        </div>
+        <button class="btn tone" id="shadeClose" style="justify-self:center">Close</button>
+      </div>
+      <div class="ringscr" id="ringscr">
+        <div style="font-size:13px;opacity:.85">Aryan’s laptop is looking for this phone</div>
+        <div class="bell"><svg class="ic"><use href="#i-bell"/></svg></div>
+        <div style="font:600 30px var(--display)">Found it?</div>
+        <button class="btn" id="ringStop" style="height:56px;padding:0 36px;border-radius:28px">Stop ringing</button>
+      </div>
+      <div class="snack" id="snack" role="status" aria-live="polite"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var st;function snack(m){var s=$('#snack');s.textContent=m;s.classList.add('on');clearTimeout(st);st=setTimeout(function(){s.classList.remove('on')},2000)}
+  var titles={home:'Tandem',share:'Share',sync:'Sync',remote:'Remote',settings:'Connection'};
+
+  function closeAll(){['#sheet','#shade'].forEach(function(s){$(s).classList.remove('on')});$('#scrim').classList.remove('on');$('#ringscr').classList.remove('on')}
+  function go(key){
+    closeAll();var p=key.split(':'),s=p[0];
+    $$('.scr').forEach(function(x){x.classList.toggle('on',x.dataset.s===s)});
+    $$('.navbar [data-nav]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.nav.split(':')[0]===s)});
+    $('#appTitle').textContent=titles[s];$('#backBtn').hidden=s!=='settings';$('#fab').hidden=s!=='share';
+    if(p[1])sub(p[1]);$('#body').scrollTop=0;mark(key);
+  }
+  function sub(n){$$('[data-sub]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.sub===n)});$$('[data-sub-p]').forEach(function(x){x.classList.toggle('on',x.dataset.subP===n)})}
+  function mark(k){$$('#jump [data-j]').forEach(function(b){b.setAttribute('aria-current',b.dataset.j===k)})}
+  function sheet(){closeAll();$('#scrim').classList.add('on');$('#sheet').classList.add('on')}
+  function shade(){closeAll();$('#shade').classList.add('on')}
+
+  document.addEventListener('click',function(e){
+    var n=e.target.closest('[data-nav]');if(n){go(n.dataset.nav);return}
+    if(e.target.closest('[data-sheet]')){sheet();return}
+    var sn=e.target.closest('[data-snack]');if(sn)snack(sn.dataset.snack);
+  });
+  $$('[data-sub]').forEach(function(b){b.addEventListener('click',function(){sub(b.dataset.sub);mark('remote:'+b.dataset.sub)})});
+  $$('#jump [data-j]').forEach(function(b){b.addEventListener('click',function(){var j=b.dataset.j;
+    if(j==='sheet'){sheet();mark(j)}else if(j==='shade'){shade();mark(j)}else if(j==='ring'){closeAll();$('#ringscr').classList.add('on');mark(j)}else go(j)})});
+  $('#backBtn').addEventListener('click',function(){go('home')});
+  $('#scrim').addEventListener('click',closeAll);
+  $('#statusbar').addEventListener('click',shade);
+  $('#shadeClose').addEventListener('click',closeAll);
+  $('#ringStop').addEventListener('click',function(){closeAll();snack('Ringing stopped')});
+
+  $$('.sw').forEach(function(s){s.addEventListener('click',function(){s.setAttribute('aria-checked',s.getAttribute('aria-checked')!=='true')})});
+  $$('[data-tile]').forEach(function(t){t.addEventListener('click',function(){t.classList.toggle('on')})});
+  $$('[data-chip]').forEach(function(c){c.addEventListener('click',function(){$$('[data-chip]',c.parentNode).forEach(function(x){x.classList.toggle('on',x===c)})})});
+  $$('[data-route]').forEach(function(r){r.addEventListener('click',function(){$$('[data-route]').forEach(function(x){x.setAttribute('aria-checked',x===r)});snack(r.textContent.indexOf('OpenVPN')>-1?'Connecting through OpenVPN…':'Using local Wi‑Fi')})});
+
+  /* transfers */
+  var vp=38;setInterval(function(){if(vp<100){vp+=2;$('#vidP').style.width=vp+'%';$('#vidMeta').textContent='To laptop · 212 MB · '+vp+'%'}},500);
+  function addX(name,meta,icon){var d=document.createElement('div');d.className='li';d.innerHTML='<span class="av"><svg class="ic"><use href="#'+icon+'"/></svg></span><div class="t"><b></b><span></span></div><svg class="ic" style="color:var(--ok)"><use href="#i-check"/></svg>';$('b',d).textContent=name;$('.t span',d).textContent=meta;$('#xfers').insertBefore(d,$('#xfers').firstChild)}
+  $('#linkSend').addEventListener('click',function(){var v=$('#linkIn').value.trim();if(!v)return;addX(v.replace(/^https?:\/\//,''),'Link · opened on laptop','i-link');snack('Link opened on laptop')});
+  $('#sendNow').addEventListener('click',function(){closeAll();go('share');addX('IMG_2042–2044.jpg','To laptop · 11.6 MB','i-img');snack('3 photos sent to Aryan’s laptop')});
+
+  /* trackpad */
+  var pad=$('#pad');pad.addEventListener('pointerdown',function(e){var r=pad.getBoundingClientRect(),d=document.createElement('span');d.className='ripple';d.style.left=(e.clientX-r.left)+'px';d.style.top=(e.clientY-r.top)+'px';pad.appendChild(d);setTimeout(function(){d.remove()},500)});
+  $('#kbd').addEventListener('keydown',function(e){if(e.key==='Enter'){snack('Typed on laptop');e.target.value=''}});
+
+  /* media */
+  var playing=true,pos=72;$('#play').addEventListener('click',function(){playing=!playing;$('#playIc use').setAttribute('href',playing?'#i-pause':'#i-play')});
+  setInterval(function(){if(!playing)return;pos=(pos+1)%225;$('#seek').value=pos/225*100;$('#tCur').textContent=Math.floor(pos/60)+':'+('0'+pos%60).slice(-2)},1000);
+  $('#vol').addEventListener('input',function(e){$('#volN').textContent=e.target.value});
+
+  /* presenter */
+  var sn=2,aim=$('#aim');function setS(n){sn=Math.max(1,Math.min(12,n));$('#sN').textContent=sn}
+  $('#sNext').addEventListener('click',function(){setS(sn+1)});$('#sPrev').addEventListener('click',function(){setS(sn-1)});
+  aim.addEventListener('pointerdown',function(){aim.classList.add('hold')});['pointerup','pointerleave','pointercancel'].forEach(function(n){aim.addEventListener(n,function(){aim.classList.remove('hold')})});
+
+  /* commands */
+  $$('[data-run]').forEach(function(b){b.addEventListener('click',function(){
+    if(b.hasAttribute('data-confirm')&&!b._c){b._c=1;b.classList.add('confirm');$('.lbl',b).textContent='Tap again to shut down';setTimeout(function(){b._c=0;b.classList.remove('confirm');$('.lbl',b).textContent='Shut down'},3500);return}
+    b._c=0;b.classList.remove('confirm');if($('.lbl',b))$('.lbl',b).textContent='Shut down';snack(b.dataset.run)})});
+})();
+</script>
+</body>
+</html>

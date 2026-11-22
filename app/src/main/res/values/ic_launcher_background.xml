@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<resources>
+    <!-- Android 8 to 11: fixed teal. Android 12+ uses the wallpaper accent (values-v31). -->
+    <color name="ic_launcher_background">#006E57</color>
+</resources>

@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tandem Material You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..800&family=Roboto+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0&display=block">
+<style>
+/* Material 3 (Material You) system. One seed hue (--h) drives every role through OKLCH tones,
+   so the dynamic-color picker re-themes the whole page like a wallpaper change on Android 12+. */
+:root{
+  --h:175;
+  --p:oklch(.47 .11 var(--h)); --on-p:oklch(1 0 0); --pc:oklch(.92 .07 var(--h)); --on-pc:oklch(.26 .07 var(--h));
+  --s:oklch(.48 .035 var(--h)); --on-s:oklch(1 0 0); --sc:oklch(.92 .03 var(--h)); --on-sc:oklch(.26 .03 var(--h));
+  --t:oklch(.48 .08 calc(var(--h) + 70)); --tc:oklch(.92 .05 calc(var(--h) + 70)); --on-tc:oklch(.27 .06 calc(var(--h) + 70));
+  --e:#B3261E; --on-e:#FFFFFF; --ec:#F9DEDC; --on-ec:#410E0B;
+  --surf:oklch(.985 .005 var(--h)); --on-surf:oklch(.21 .01 var(--h)); --on-sv:oklch(.43 .018 var(--h));
+  --scl0:oklch(1 0 0); --scl:oklch(.965 .007 var(--h)); --sc0:oklch(.948 .009 var(--h)); --sch:oklch(.93 .011 var(--h)); --schh:oklch(.912 .013 var(--h));
+  --ol:oklch(.6 .02 var(--h)); --olv:oklch(.84 .015 var(--h));
+  --inv:oklch(.31 .01 var(--h)); --on-inv:oklch(.95 .008 var(--h)); --inv-p:oklch(.8 .1 var(--h));
+  --scrim:rgba(0,0,0,.32); --frame:#1C1F1E;
+  --e1:0 1px 2px rgba(0,0,0,.3),0 1px 3px 1px rgba(0,0,0,.15);
+  --e3:0 1px 3px rgba(0,0,0,.3),0 4px 8px 3px rgba(0,0,0,.15);
+  --font:"Roboto Flex","Roboto",system-ui,sans-serif; --mono:"Roboto Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --p:oklch(.82 .1 var(--h)); --on-p:oklch(.31 .07 var(--h)); --pc:oklch(.39 .085 var(--h)); --on-pc:oklch(.92 .07 var(--h));
+  --s:oklch(.82 .035 var(--h)); --on-s:oklch(.31 .03 var(--h)); --sc:oklch(.37 .03 var(--h)); --on-sc:oklch(.92 .03 var(--h));
+  --t:oklch(.82 .07 calc(var(--h) + 70)); --tc:oklch(.39 .07 calc(var(--h) + 70)); --on-tc:oklch(.92 .05 calc(var(--h) + 70));
+  --e:#F2B8B5; --on-e:#601410; --ec:#8C1D18; --on-ec:#F9DEDC;
+  --surf:oklch(.17 .007 var(--h)); --on-surf:oklch(.92 .008 var(--h)); --on-sv:oklch(.8 .016 var(--h));
+  --scl0:oklch(.14 .006 var(--h)); --scl:oklch(.2 .008 var(--h)); --sc0:oklch(.225 .009 var(--h)); --sch:oklch(.26 .01 var(--h)); --schh:oklch(.3 .012 var(--h));
+  --ol:oklch(.62 .018 var(--h)); --olv:oklch(.4 .015 var(--h));
+  --inv:oklch(.92 .008 var(--h)); --on-inv:oklch(.26 .01 var(--h)); --inv-p:oklch(.47 .11 var(--h));
+  --scrim:rgba(0,0,0,.5); --frame:#0A0C0B; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --p:oklch(.82 .1 var(--h)); --on-p:oklch(.31 .07 var(--h)); --pc:oklch(.39 .085 var(--h)); --on-pc:oklch(.92 .07 var(--h));
+  --s:oklch(.82 .035 var(--h)); --on-s:oklch(.31 .03 var(--h)); --sc:oklch(.37 .03 var(--h)); --on-sc:oklch(.92 .03 var(--h));
+  --t:oklch(.82 .07 calc(var(--h) + 70)); --tc:oklch(.39 .07 calc(var(--h) + 70)); --on-tc:oklch(.92 .05 calc(var(--h) + 70));
+  --e:#F2B8B5; --on-e:#601410; --ec:#8C1D18; --on-ec:#F9DEDC;
+  --surf:oklch(.17 .007 var(--h)); --on-surf:oklch(.92 .008 var(--h)); --on-sv:oklch(.8 .016 var(--h));
+  --scl0:oklch(.14 .006 var(--h)); --scl:oklch(.2 .008 var(--h)); --sc0:oklch(.225 .009 var(--h)); --sch:oklch(.26 .01 var(--h)); --schh:oklch(.3 .012 var(--h));
+  --ol:oklch(.62 .018 var(--h)); --olv:oklch(.4 .015 var(--h));
+  --inv:oklch(.92 .008 var(--h)); --on-inv:oklch(.26 .01 var(--h)); --inv-p:oklch(.47 .11 var(--h));
+  --scrim:rgba(0,0,0,.5); --frame:#0A0C0B; color-scheme:dark}
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--scl);color:var(--on-surf);font:400 14px/20px var(--font);letter-spacing:.25px;transition:background .3s}
+button,input{font:inherit;color:inherit;letter-spacing:inherit}
+button{cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:3px solid var(--s);outline-offset:2px}
+.ms{font-family:"Material Symbols Rounded";font-weight:400;font-style:normal;font-size:24px;line-height:1;display:inline-block;white-space:nowrap;direction:ltr;-webkit-font-feature-settings:"liga";font-feature-settings:"liga";font-variation-settings:"FILL" 0,"wght" 400,"opsz" 24;flex:none;user-select:none}
+.ms.f{font-variation-settings:"FILL" 1,"wght" 400,"opsz" 24}
+.ms.sm{font-size:18px}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:0}
+
+/* M3 type scale */
+.display-s{font-size:36px;line-height:44px;font-weight:400;letter-spacing:0}
+.headline-l{font-size:32px;line-height:40px;font-weight:400;letter-spacing:0}
+.headline-m{font-size:28px;line-height:36px;font-weight:400;letter-spacing:0}
+.headline-s{font-size:24px;line-height:32px;font-weight:400;letter-spacing:0}
+.title-l{font-size:22px;line-height:28px;font-weight:400;letter-spacing:0}
+.title-m{font-size:16px;line-height:24px;font-weight:500;letter-spacing:.15px}
+.title-s{font-size:14px;line-height:20px;font-weight:500;letter-spacing:.1px}
+.body-l{font-size:16px;line-height:24px;letter-spacing:.5px}
+.body-m{font-size:14px;line-height:20px;letter-spacing:.25px}
+.body-s{font-size:12px;line-height:16px;letter-spacing:.4px}
+.label-l{font-size:14px;line-height:20px;font-weight:500;letter-spacing:.1px}
+.label-m{font-size:12px;line-height:16px;font-weight:500;letter-spacing:.5px}
+.label-s{font-size:11px;line-height:16px;font-weight:500;letter-spacing:.5px}
+.v{color:var(--on-sv)}
+
+/* page */
+.page{max-width:1480px;margin:0 auto;padding:28px max(16px,env(safe-area-inset-right)) 64px max(16px,env(safe-area-inset-left))}
+.top{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;justify-content:space-between;padding:8px 8px 28px}
+.top h1{margin:0;font-weight:475}
+.top p{margin:8px 0 0;max-width:58ch}
+.themebar{display:flex;flex-wrap:wrap;gap:16px;align-items:center;background:var(--sc0);border-radius:28px;padding:10px 12px 10px 20px}
+.seeds{display:flex;gap:8px}
+.seed{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;position:relative;overflow:hidden;background:conic-gradient(oklch(.47 .11 var(--sh)) 0 50%,oklch(.92 .07 var(--sh)) 0 75%,oklch(.48 .08 calc(var(--sh) + 70)) 0)}
+.seed[aria-pressed="true"]{outline:3px solid var(--on-surf);outline-offset:2px}
+.seed[aria-pressed="true"]::after{content:"check";font-family:"Material Symbols Rounded";font-size:18px;color:#fff;background:rgba(0,0,0,.35);border-radius:50%;width:24px;height:24px;display:grid;place-items:center}
+.section{margin:28px 0 0}
+.section-h{display:flex;align-items:baseline;gap:12px;padding:0 8px 16px}
+.section-h .ms{color:var(--p)}
+.phones{display:grid;grid-template-columns:repeat(auto-fill,minmax(316px,1fr));gap:36px 28px;justify-items:center}
+.cap{text-align:center;margin-top:12px}
+
+/* device */
+.ph-wrap{width:100%;max-width:340px}
+.phone{position:relative;width:100%;height:720px;border-radius:44px;background:var(--frame);padding:9px;box-shadow:0 24px 50px -24px rgba(0,0,0,.4)}
+.scr{position:relative;height:100%;border-radius:36px;overflow:hidden;background:var(--surf);display:flex;flex-direction:column;isolation:isolate}
+.sb{flex:none;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 22px 0 26px;font-size:14px;font-weight:500;position:relative;z-index:6}
+.sb .cam{position:absolute;left:50%;top:10px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:#000}
+.sb .r{display:flex;gap:4px;align-items:center}.sb .ms{font-size:17px}
+.main{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;position:relative}
+.main::-webkit-scrollbar{display:none}
+.gb{flex:none;height:24px;display:grid;place-items:center;background:inherit}
+.gb i{width:100px;height:4px;border-radius:2px;background:var(--on-surf);opacity:.4}
+
+/* top app bars */
+.tab{display:flex;align-items:center;gap:4px;height:64px;padding:0 4px 0 4px}
+.tab .title-l{flex:1;padding-left:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tab.lg{height:auto;flex-wrap:wrap;padding-bottom:8px}
+.tab.lg .bar{display:flex;width:100%;justify-content:flex-end}
+.tab.lg .ttl{width:100%;padding:12px 16px 4px}
+.ibtn{width:48px;height:48px;display:grid;place-items:center;border-radius:50%;color:var(--on-sv);position:relative}
+.ibtn:hover{background:color-mix(in srgb,var(--on-sv) 8%,transparent)}
+.ibtn.filled{background:var(--p);color:var(--on-p);width:40px;height:40px}
+.ibtn.tonal{background:var(--sc);color:var(--on-sc);width:40px;height:40px}
+.ibtn.outl{border:1px solid var(--ol);width:40px;height:40px}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--tc);color:var(--on-tc);display:grid;place-items:center;font-size:14px;font-weight:500}
+
+/* nav bar */
+.nav{flex:none;display:grid;grid-template-columns:repeat(4,1fr);height:80px;background:var(--sc0);padding-top:12px}
+.nav button{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--on-sv)}
+.nav .ind{width:64px;height:32px;border-radius:16px;display:grid;place-items:center;position:relative;transition:background .2s}
+.nav .on{color:var(--on-surf)}
+.nav .on .ind{background:var(--sc);color:var(--on-sc)}
+.nav .on .ms{font-variation-settings:"FILL" 1}
+.nav .badge{position:absolute;top:2px;left:36px;min-width:16px;height:16px;border-radius:8px;background:var(--e);color:var(--on-e);font-size:11px;font-weight:500;display:grid;place-items:center;padding:0 4px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 24px;border-radius:20px;font-size:14px;font-weight:500;letter-spacing:.1px;white-space:nowrap}
+.btn .ms{font-size:18px}
+.btn.icon{padding-left:16px}
+.btn.filled{background:var(--p);color:var(--on-p)}
+.btn.tonal{background:var(--sc);color:var(--on-sc)}
+.btn.outlined{border:1px solid var(--ol);color:var(--p)}
+.btn.text{color:var(--p);padding:0 12px}
+.btn.elev{background:var(--scl);color:var(--p);box-shadow:var(--e1)}
+.btn.danger{background:var(--e);color:var(--on-e)}
+.btn:hover{filter:brightness(1.05)}
+.btn:disabled{opacity:.38;cursor:default}
+.fab{display:grid;place-items:center;width:56px;height:56px;border-radius:16px;background:var(--pc);color:var(--on-pc);box-shadow:var(--e3)}
+.fab.ext{display:flex;width:auto;padding:0 20px 0 16px;gap:12px;font-weight:500}
+.fab.lg{width:96px;height:96px;border-radius:28px}
+.fab.lg .ms{font-size:36px}
+.fab-pos{position:absolute;right:16px;bottom:16px;z-index:3}
+
+/* cards */
+.card{border-radius:12px;padding:16px;min-width:0}
+.card.filled{background:var(--schh)}
+.card.elev{background:var(--scl);box-shadow:var(--e1)}
+.card.outl{background:var(--surf);border:1px solid var(--olv)}
+.card.primary{background:var(--pc);color:var(--on-pc)}
+.card.tertiary{background:var(--tc);color:var(--on-tc)}
+.pad16{padding:0 16px}
+.stack{display:grid;gap:12px}
+.row{display:flex;align-items:center;gap:12px}
+.sp{margin-left:auto}
+
+/* list */
+.list{display:grid}
+.li{display:flex;align-items:center;gap:16px;min-height:56px;padding:8px 24px 8px 16px;text-align:left;width:100%}
+.li.three{min-height:88px;align-items:flex-start;padding-top:12px}
+.li:hover{background:color-mix(in srgb,var(--on-surf) 5%,transparent)}
+.li .lead{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--pc);color:var(--on-pc);flex:none}
+.li .lead.sq{border-radius:8px;background:var(--sch);color:var(--on-sv)}
+.li .lead.ico{background:none;color:var(--on-sv);width:24px}
+.li .t{flex:1;min-width:0}
+.li .t .h{font-size:16px;line-height:24px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.li .t .s{font-size:14px;line-height:20px;color:var(--on-sv);display:block}
+.li .trail{color:var(--on-sv);font-size:11px;font-weight:500}
+.subhead{padding:16px 16px 4px;font-size:14px;font-weight:500;color:var(--p);letter-spacing:.1px}
+.divider{height:1px;background:var(--olv);margin:4px 16px}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 16px;border-radius:8px;border:1px solid var(--olv);font-size:14px;font-weight:500;color:var(--on-sv);white-space:nowrap}
+.chip .ms{font-size:18px;color:var(--p)}
+.chip.assist{color:var(--on-surf);padding-left:8px}
+.chip.filter[aria-pressed="true"]{background:var(--sc);color:var(--on-sc);border-color:transparent;padding-left:8px}
+.chip.filter[aria-pressed="true"]::before{content:"check";font-family:"Material Symbols Rounded";font-size:18px}
+.chip.input{background:var(--sch);border-color:transparent}
+
+/* switch */
+.sw{position:relative;width:52px;height:32px;border-radius:16px;background:var(--schh);border:2px solid var(--ol);flex:none;transition:background .2s,border-color .2s}
+.sw::after{content:"";position:absolute;top:50%;left:6px;width:16px;height:16px;margin-top:-8px;border-radius:50%;background:var(--ol);transition:all .2s cubic-bezier(.2,0,0,1);font-family:"Material Symbols Rounded";font-size:16px;display:grid;place-items:center;color:var(--pc)}
+.sw[aria-checked="true"]{background:var(--p);border-color:var(--p)}
+.sw[aria-checked="true"]::after{left:22px;width:24px;height:24px;margin-top:-12px;background:var(--on-p);content:"check";color:var(--on-pc)}
+
+/* segmented */
+.seg{display:flex;border:1px solid var(--ol);border-radius:20px;overflow:hidden;height:40px}
+.seg button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:500;border-left:1px solid var(--ol);padding:0 8px;white-space:nowrap}
+.seg button:first-child{border-left:0}
+.seg button[aria-pressed="true"]{background:var(--sc);color:var(--on-sc)}
+.seg button[aria-pressed="true"]::before{content:"check";font-family:"Material Symbols Rounded";font-size:18px}
+
+/* text field (outlined) */
+.tf{position:relative}
+.tf input{width:100%;height:56px;padding:0 48px 0 16px;border-radius:4px;border:1px solid var(--ol);background:transparent;font-size:16px}
+.tf input:focus{outline:none;border:2px solid var(--p);padding-left:15px}
+.tf label{position:absolute;left:12px;top:-8px;padding:0 4px;background:var(--surf);font-size:12px;color:var(--on-sv)}
+.tf input:focus+label{color:var(--p)}
+.tf .trail{position:absolute;right:4px;top:4px}
+.tf .help{font-size:12px;color:var(--on-sv);padding:4px 16px 0}
+.search{display:flex;align-items:center;gap:12px;height:56px;border-radius:28px;background:var(--sch);padding:0 4px 0 16px;color:var(--on-sv)}
+
+/* slider & progress */
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;--val:50%}
+input[type=range]::-webkit-slider-runnable-track{height:16px;border-radius:8px;background:linear-gradient(90deg,var(--p) var(--val),var(--sc) var(--val))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:4px;height:44px;margin-top:-14px;border-radius:2px;background:var(--p);box-shadow:0 0 0 6px var(--surf)}
+input[type=range]::-moz-range-track{height:16px;border-radius:8px;background:var(--sc)}
+input[type=range]::-moz-range-progress{height:16px;border-radius:8px;background:var(--p)}
+input[type=range]::-moz-range-thumb{width:4px;height:44px;border:0;border-radius:2px;background:var(--p);box-shadow:0 0 0 6px var(--surf)}
+.lp{height:4px;border-radius:2px;background:var(--sc);overflow:hidden;margin-top:8px;display:flex;gap:4px}
+.lp i{display:block;height:100%;background:var(--p);border-radius:2px;transition:width .4s}
+.lp.ind i{width:40%;animation:ind 1.6s infinite cubic-bezier(.4,0,.2,1)}
+@keyframes ind{from{transform:translateX(-100%)}to{transform:translateX(260%)}}
+.cp{width:48px;height:48px;flex:none}
+.cp circle{fill:none;stroke-width:4;stroke-linecap:round}
+
+/* overlays */
+.scrim{position:absolute;inset:0;background:var(--scrim);z-index:10;opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:11;background:var(--scl);border-radius:28px 28px 0 0;padding:0 0 24px;transform:translateY(0);transition:transform .3s cubic-bezier(.2,0,0,1)}
+.sheet.off{transform:translateY(105%)}
+.handle{width:32px;height:4px;border-radius:2px;background:var(--on-sv);opacity:.4;margin:22px auto 14px}
+.dialog{position:absolute;left:24px;right:24px;top:50%;transform:translateY(-50%) scale(.9);z-index:11;background:var(--sch);border-radius:28px;padding:24px;display:grid;gap:16px;opacity:0;pointer-events:none;transition:.2s cubic-bezier(.2,0,0,1)}
+.dialog.on{opacity:1;transform:translateY(-50%);pointer-events:auto}
+.dialog .ms.hero{color:var(--s);justify-self:center}
+.dialog .acts{display:flex;justify-content:flex-end;gap:8px}
+.snack{position:absolute;left:12px;right:12px;bottom:96px;z-index:20;min-height:48px;border-radius:4px;background:var(--inv);color:var(--on-inv);display:flex;align-items:center;gap:8px;padding:4px 8px 4px 16px;box-shadow:var(--e3);opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none}
+.snack.on{opacity:1;transform:none;pointer-events:auto}
+.snack .btn{color:var(--inv-p);height:36px;padding:0 8px;margin-left:auto}
+
+/* screen-specific */
+.hero-dev{display:grid;gap:16px;padding:20px;border-radius:28px;background:var(--pc);color:var(--on-pc);margin:0 16px}
+.hero-dev .ill{width:64px;height:64px;border-radius:20px;background:var(--p);color:var(--on-p);display:grid;place-items:center}
+.hero-dev .ill .ms{font-size:34px}
+.dot{width:8px;height:8px;border-radius:50%;background:currentColor;display:inline-block}
+.live{animation:bl 1.6s infinite}@keyframes bl{50%{opacity:.35}}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.metric{background:color-mix(in srgb,var(--on-pc) 8%,transparent);border-radius:16px;padding:12px}
+.qa{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:0 8px}
+.qa button{display:grid;justify-items:center;gap:6px;padding:8px 0;border-radius:16px;font-size:12px;font-weight:500;color:var(--on-surf)}
+.qa .ic{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:var(--sc);color:var(--on-sc)}
+.qa button:hover .ic{background:var(--pc);color:var(--on-pc)}
+.np{display:flex;gap:12px;align-items:center;margin:0 16px;padding:12px;border-radius:16px;background:var(--tc);color:var(--on-tc)}
+.np .art{width:48px;height:48px;border-radius:12px;background:var(--t);color:var(--tc);display:grid;place-items:center}
+.pad{position:relative;margin:0 16px;height:330px;border-radius:28px;background:var(--sc0);overflow:hidden;touch-action:none;cursor:crosshair;display:grid;place-items:center;text-align:center}
+.pad .hint{color:var(--on-sv);display:grid;gap:6px;justify-items:center;pointer-events:none}
+.pad .rail{position:absolute;right:10px;top:24px;bottom:24px;width:4px;border-radius:2px;background:var(--olv)}
+.rip{position:absolute;width:72px;height:72px;margin:-36px 0 0 -36px;border-radius:50%;background:var(--p);opacity:.22;pointer-events:none;animation:rp .45s forwards}
+@keyframes rp{from{transform:scale(.2)}to{transform:scale(1.3);opacity:0}}
+.mouse{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 16px}
+.mouse button{height:56px;border-radius:16px;background:var(--sch);font-weight:500}
+.mouse button:active{background:var(--pc);color:var(--on-pc)}
+.art-big{margin:8px 24px 0;aspect-ratio:1;border-radius:28px;background:radial-gradient(circle at 30% 25%,var(--tc),var(--t) 60%,var(--p));display:grid;place-items:end start;padding:20px;color:var(--on-p);max-width:100%}
+.art-big .ms{font-size:56px;opacity:.9}
+.mctrl{display:flex;align-items:center;justify-content:center;gap:12px}
+.mctrl .play{width:96px;height:72px;border-radius:24px;background:var(--p);color:var(--on-p);display:grid;place-items:center;transition:border-radius .25s}
+.mctrl .play.paused{border-radius:36px}
+.mctrl .play .ms{font-size:36px;font-variation-settings:"FILL" 1}
+.mctrl .sk{width:56px;height:56px;border-radius:50%;background:var(--sc);color:var(--on-sc);display:grid;place-items:center}
+.hold{margin:0 16px;height:260px;border-radius:120px 120px 28px 28px;background:var(--pc);color:var(--on-pc);display:grid;place-items:center;text-align:center;user-select:none;touch-action:none;transition:background .2s,transform .2s}
+.hold.on{background:var(--p);color:var(--on-p);transform:scale(.98)}
+.hold .ms{font-size:48px}
+.slidebtns{display:grid;grid-template-columns:1fr 1.4fr;gap:8px;margin:0 16px}
+.slidebtns button{height:72px;border-radius:24px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:16px;font-weight:500}
+.ringfull{position:absolute;inset:0;background:var(--t);color:var(--on-p);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:72px 24px 48px;text-align:center;z-index:1}
+.pulse{position:relative;width:148px;height:148px;display:grid;place-items:center}
+.pulse::before,.pulse::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--tc);opacity:.35;animation:wave 2s infinite}
+.pulse::after{animation-delay:1s}
+@keyframes wave{from{transform:scale(.6);opacity:.5}to{transform:scale(1.4);opacity:0}}
+.pulse .core{position:relative;width:104px;height:104px;border-radius:36px;background:var(--tc);color:var(--on-tc);display:grid;place-items:center;animation:wig .6s infinite}
+.pulse .core .ms{font-size:48px;font-variation-settings:"FILL" 1}
+@keyframes wig{25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
+.swipe{width:100%;height:72px;border-radius:36px;background:color-mix(in srgb,var(--tc) 25%,transparent);position:relative;display:grid;place-items:center;font-weight:500}
+.swipe button{position:absolute;left:6px;top:6px;width:60px;height:60px;border-radius:50%;background:var(--tc);color:var(--on-tc);display:grid;place-items:center}
+.wall{position:absolute;inset:0;background:radial-gradient(120% 70% at 20% 0%,var(--pc),transparent 60%),radial-gradient(90% 60% at 100% 100%,var(--tc),transparent 60%),var(--sc0)}
+.shade{position:relative;z-index:1;padding:4px 12px 12px;display:grid;gap:10px}
+.qs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tile{height:68px;border-radius:24px;background:var(--schh);display:flex;align-items:center;gap:10px;padding:0 14px;text-align:left;min-width:0}
+.tile .ms{font-size:22px}
+.tile b{display:block;font-weight:500;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile span{display:block;font-size:12px;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile>div{min-width:0}
+.tile.on{background:var(--p);color:var(--on-p)}
+.bright{height:48px;border-radius:24px;background:var(--schh);position:relative;overflow:hidden}
+.bright i{position:absolute;inset:0 38% 0 0;background:var(--p);border-radius:24px;display:flex;align-items:center;padding-left:14px;color:var(--on-p)}
+.notif{background:var(--scl);border-radius:24px;padding:14px 14px 10px;display:grid;gap:8px}
+.notif .hdr{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--on-sv)}
+.notif .hdr .ai{width:20px;height:20px;border-radius:50%;background:var(--p);color:var(--on-p);display:grid;place-items:center}
+.notif .hdr .ai .ms{font-size:14px}
+.notif .acts{display:flex;gap:8px;flex-wrap:wrap}
+.notif .acts button{height:32px;padding:0 12px;border-radius:16px;background:var(--sc);color:var(--on-sc);font-size:13px;font-weight:500}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:0 3px}
+.gal i{aspect-ratio:1;border-radius:4px;background:var(--sch);position:relative}
+.gal i.sel{border-radius:16px;outline:3px solid var(--p);outline-offset:-3px}
+.gal i.sel::after{content:"check_circle";font-family:"Material Symbols Rounded";font-variation-settings:"FILL" 1;position:absolute;top:6px;left:6px;color:var(--p);font-size:22px}
+.gal i:nth-child(3n+1){background:linear-gradient(160deg,var(--pc),var(--sch))}
+.gal i:nth-child(4n+2){background:linear-gradient(200deg,var(--tc),var(--sch))}
+.gal i:nth-child(5n){background:linear-gradient(120deg,var(--sc),var(--schh))}
+.targets{display:flex;gap:16px;padding:4px 24px 12px;overflow-x:auto}
+.targets button{display:grid;justify-items:center;gap:6px;font-size:12px;width:64px;text-align:center}
+.targets .bub{width:56px;height:56px;border-radius:50%;background:var(--pc);color:var(--on-pc);display:grid;place-items:center;position:relative}
+.targets .bub small{position:absolute;right:-2px;bottom:-2px;width:22px;height:22px;border-radius:50%;background:var(--p);color:var(--on-p);display:grid;place-items:center;border:2px solid var(--scl)}
+.targets .bub small .ms{font-size:13px}
+.targets .app{background:var(--schh);color:var(--on-sv)}
+.banner{display:flex;gap:16px;padding:16px;margin:0 16px;border-radius:16px;background:var(--sch);align-items:flex-start}
+.banner .ms{color:var(--p)}
+.fp{font-family:var(--mono);font-size:12px;line-height:20px;background:var(--sch);border-radius:12px;padding:12px;word-break:break-all;letter-spacing:.5px}
+.battery{display:flex;align-items:flex-end;gap:5px;height:72px}
+.battery i{flex:1;border-radius:4px 4px 2px 2px;background:var(--sc)}
+.battery i.now{background:var(--p)}
+.tag{display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 8px;border-radius:6px;background:var(--sc);color:var(--on-sc);font-size:12px;font-weight:500}
+.tag.err{background:var(--ec);color:var(--on-ec)}
+.tag.ter{background:var(--tc);color:var(--on-tc)}
+.tag .ms{font-size:14px}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px;padding:16px 8px 0}
+.swatch{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:12px;background:var(--sc0);font-size:12px}
+.swatch i{width:28px;height:28px;border-radius:8px;border:1px solid var(--olv)}
+
+@media (max-width:420px){
+  .phone{height:680px;padding:7px;border-radius:40px}
+  .scr{border-radius:34px}
+  .themebar{width:100%}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="top">
+  <div>
+    <div class="label-l" style="color:var(--p)">Android · Material 3 · Material You</div>
+    <h1 class="display-s">Tandem for Android</h1>
+    <p class="body-l v">Your phone and computer, working as one. Every screen uses Material 3 components and dynamic color. Pick a wallpaper color to re-theme the whole app, the way Android 12+ does.</p>
+  </div>
+  <div class="themebar" role="group" aria-label="Theme">
+    <span class="label-l v">Dynamic color</span>
+    <div class="seeds">
+      <button class="seed" style="--sh:175" data-h="175" aria-pressed="true" aria-label="Teal wallpaper"></button>
+      <button class="seed" style="--sh:265" data-h="265" aria-pressed="false" aria-label="Blue wallpaper"></button>
+      <button class="seed" style="--sh:300" data-h="300" aria-pressed="false" aria-label="Purple wallpaper"></button>
+      <button class="seed" style="--sh:25" data-h="25" aria-pressed="false" aria-label="Red wallpaper"></button>
+      <button class="seed" style="--sh:75" data-h="75" aria-pressed="false" aria-label="Amber wallpaper"></button>
+      <button class="seed" style="--sh:140" data-h="140" aria-pressed="false" aria-label="Green wallpaper"></button>
+    </div>
+    <button class="ibtn tonal" id="mode" aria-label="Toggle dark theme"><span class="ms">dark_mode</span></button>
+  </div>
+</header>
+
+<!-- ============ FILE & DATA ============ -->
+<section class="section">
+  <div class="section-h"><span class="ms">folder_shared</span><h2 class="headline-s" style="margin:0">File &amp; data sharing</h2></div>
+  <div class="phones">
+
+    <!-- HOME -->
+    <div class="ph-wrap"><div class="phone"><div class="scr" data-nav="0">
+      <div class="main">
+        <div class="tab lg">
+          <div class="bar"><button class="ibtn" aria-label="Search"><span class="ms">search</span></button><button class="ibtn" aria-label="Account"><span class="avatar">A</span></button></div>
+          <div class="ttl headline-m">Tandem</div>
+        </div>
+        <div class="hero-dev">
+          <div class="row"><div class="ill"><span class="ms">laptop_chromebook</span></div><div><div class="title-l">Aryan’s laptop</div><div class="body-m row" style="gap:6px"><span class="dot live"></span>Connected · Wi‑Fi · encrypted</div></div></div>
+          <div class="metrics">
+            <div class="metric"><div class="label-m">Laptop battery</div><div class="title-l">64%</div><div class="body-s">Charging</div></div>
+            <div class="metric"><div class="label-m">Latency</div><div class="title-l">4 ms</div><div class="body-s">Home‑5G</div></div>
+          </div>
+        </div>
+        <div class="qa" style="margin-top:16px">
+          <button data-snack="Choose files to send"><span class="ic"><span class="ms">upload_file</span></span>Send file</button>
+          <button data-snack="Clipboard sent to laptop"><span class="ic"><span class="ms">content_paste_go</span></span>Clipboard</button>
+          <button data-snack="Opening trackpad"><span class="ic"><span class="ms">mouse</span></span>Trackpad</button>
+          <button data-snack="Laptop locked"><span class="ic"><span class="ms">lock</span></span>Lock PC</button>
+        </div>
+        <div class="np" style="margin-top:16px">
+          <div class="art"><span class="ms f">music_note</span></div>
+          <div style="flex:1;min-width:0"><div class="title-s">Night Drive</div><div class="body-s">Kora Lane · playing on laptop</div></div>
+          <button class="ibtn" style="color:inherit" aria-label="Pause" data-toggle-play><span class="ms f">pause</span></button>
+        </div>
+        <div class="subhead">Today</div>
+        <div class="list">
+          <div class="li"><span class="lead sq"><span class="ms">image</span></span><span class="t"><span class="h">IMG_2041.jpg</span><span class="s">Sent to laptop · 4.2 MB</span></span><span class="trail">9:41</span></div>
+          <div class="li"><span class="lead sq"><span class="ms">description</span></span><span class="t"><span class="h">project-brief.pdf</span><span class="s">Received · Downloads</span></span><span class="trail">9:20</span></div>
+        </div>
+        <div style="height:80px"></div>
+      </div>
+      <button class="fab ext fab-pos" style="bottom:96px" data-snack="Pick what to send"><span class="ms">send</span>Send</button>
+    </div></div><div class="cap"><div class="title-s">Home</div><div class="body-s v">Large top app bar · extended FAB</div></div></div>
+
+    <!-- SHARE SHEET -->
+    <div class="ph-wrap"><div class="phone"><div class="scr" data-nav="none">
+      <div class="main">
+        <div class="tab"><button class="ibtn" aria-label="Close"><span class="ms">close</span></button><span class="title-l">3 selected</span><button class="ibtn" aria-label="Share"><span class="ms">share</span></button></div>
+        <div class="gal"><i></i><i class="sel"></i><i></i><i class="sel"></i><i></i><i></i><i class="sel"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div class="scrim on"></div>
+      <div class="sheet" data-sheet>
+        <div class="handle"></div>
+        <div class="row" style="padding:0 24px 16px"><div style="width:48px;height:48px;border-radius:12px;background:var(--sch);display:grid;place-items:center"><span class="ms">photo_library</span></div><div><div class="title-m">3 photos</div><div class="body-s v">IMG_2042–2044.jpg · 11.6 MB</div></div></div>
+        <div class="label-l v" style="padding:0 24px 8px">Send with Tandem</div>
+        <div class="targets">
+          <button data-snack="Sending 3 photos to Aryan’s laptop"><span class="bub"><span class="ms">laptop_chromebook</span><small><span class="ms">sync_alt</span></small></span>Aryan’s laptop</button>
+          <button data-snack="Office desktop is offline"><span class="bub" style="opacity:.5"><span class="ms">desktop_windows</span><small><span class="ms">sync_alt</span></small></span>Office desktop</button>
+        </div>
+        <div class="divider"></div>
+        <div class="targets" style="padding-top:12px">
+          <button><span class="bub app"><span class="ms">sms</span></span>Messages</button>
+          <button><span class="bub app"><span class="ms">mail</span></span>Mail</button>
+          <button><span class="bub app"><span class="ms">bluetooth</span></span>Bluetooth</button>
+          <button><span class="bub app"><span class="ms">content_copy</span></span>Copy</button>
+        </div>
+      </div>
+    </div></div><div class="cap"><div class="title-s">Share sheet</div><div class="body-s v">Direct-share target · modal bottom sheet</div></div></div>
+
+    <!-- TRANSFERS & FILES -->
+    <div class="ph-wrap"><div class="phone"><div class="scr" data-nav="1">
+      <div class="main">
+        <div class="tab"><span class="title-l">Share</span><button class="ibtn" aria-label="History"><span class="ms">history</span></button><button class="ibtn" aria-label="More"><span class="ms">more_vert</span></button></div>
+        <div class="stack pad16">
+          <div class="tf"><input type="text" id="link1" value="maps.example.com/cafe-lumen"><label for="link1">Link to open on laptop</label><button class="ibtn trail" aria-label="Send link" data-snack="Link opened on laptop" style="color:var(--p)"><span class="ms">send</span></button></div>
+        </div>
+        <div class="subhead">Transfers</div>
+        <div class="list">
+          <div class="li"><svg class="cp" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18" stroke="var(--sc)"/><circle cx="24" cy="24" r="18" stroke="var(--p)" stroke-dasharray="113" stroke-dashoffset="64" transform="rotate(-90 24 24)" data-ring/></svg><span class="t"><span class="h">VID_0318.mp4</span><span class="s" data-ringtxt>To laptop · 212 MB · 43%</span></span><button class="ibtn" aria-label="Cancel"><span class="ms">close</span></button></div>
+          <div class="li"><span class="lead"><span class="ms">download_done</span></span><span class="t"><span class="h">project-brief.pdf</span><span class="s">From laptop · 2.8 MB</span></span><button class="btn text" style="padding:0 8px">Open</button></div>
+          <div class="li"><span class="lead"><span class="ms">link</span></span><span class="t"><span class="h">github.com/tandem/cli</span><span class="s">From laptop · opened</span></span></div>
+        </div>
+        <div class="subhead">Phone storage on laptop</div>
+        <div class="card filled" style="margin:4px 16px 0">
+          <div class="row"><span class="ms" style="color:var(--p)">folder_open</span><div style="flex:1"><div class="title-m">Let laptop browse files</div><div class="body-s v">Mounted as ~/Phone over SFTP</div></div><button class="sw" role="switch" aria-checked="true" aria-label="Browse files"></button></div>
+          <div class="lp" style="margin-top:14px"><i style="width:75%"></i></div>
+          <div class="row body-s v" style="margin-top:6px"><span>96 GB used</span><span class="sp">128 GB</span></div>
+          <div class="chips" style="margin-top:12px"><span class="chip input">DCIM</span><span class="chip input">Download</span><span class="chip input">Documents</span><button class="chip assist"><span class="ms">add</span>Folder</button></div>
+        </div>
+        <div style="height:24px"></div>
+      </div>
+    </div></div><div class="cap"><div class="title-s">Files &amp; links</div><div class="body-s v">Outlined text field · progress · filled card</div></div></div>
+
+    <!-- CLIPBOARD -->
+    <div class="ph-wrap"><div class="phone"><div class="scr" data-nav="1">
+      <div class="main">
+        <div class="tab"><button class="ibtn" aria-label="Back"><span class="ms">arrow_back</span></button><span class="title-l">Clipboard</span><button class="ibtn" aria-label="Clear"><span class="ms">delete_sweep</span></button></div>
+        <div class="pad16"><div class="search"><span class="ms">search</span><span class="body-l">Search clipboard</span></div></div>
+        <div class="card primary" style="margin:16px 16px 0;display:grid;gap:12px">
+          <div class="row"><span class="ms">sync</span><div style="flex:1"><div class="title-m">Shared clipboard</div><div class="body-s">Copy on one device, paste on the other</div></div><button class="sw" role="switch" aria-checked="true" aria-label="Auto sync"></button></div>
+          <button class="btn filled icon" data-snack="Sent to laptop clipboard"><span class="ms">content_paste_go</span>Send current clipboard</button>
+        </div>
+        <div class="chips pad16" style="margin-top:16px"><button class="chip filter" aria-pressed="true" data-single>All</button><button class="chip filter" aria-pressed="false" data-single>From laptop</button><button class="chip filter" aria-pressed="false" data-single>From phone</button></div>
+        <div class="list" style="margin-top:8px">
+          <div class="li three"><span class="lead"><span class="ms">laptop_chromebook</span></span><span class="t"><span class="h mono" style="font-size:14px">npm i @tandem/cli</span><span class="s">From laptop · 9:10</span></span><button class="ibtn" aria-label="Copy" data-snack="Copied"><span class="ms">content_copy</span></button></div>
+          <div class="li three"><span class="lead" style="background:var(--tc);color:var(--on-tc)"><span class="ms">smartphone</span></span><span class="t"><span class="h">Gate B14, boarding 18:20</span><span class="s">From phone · 9:38</span></span><button class="ibtn" aria-label="Copy" data-snack="Copied"><span class="ms">content_copy</span></button></div>
+          <div class="li three"><span class="lead"><span class="ms">laptop_chromebook</span></span><span class="t"><span class="h">https://docs.example.com/spec-v2</span><span class="s">From laptop · yesterday</span></span><button class="ibtn" aria-label="Copy" data-snack="Copied"><span class="ms">content_copy</span></button></div>
+          <div class="li three"><span class="lead" style="background:var(--tc);color:var(--on-tc)"><span class="ms">smartphone</span></span><span class="t"><span class="h">+91 98765 43210</span><span class="s">From phone · yesterday</span></span><button class="ibtn" aria-label="Copy" data-snack="Copied"><span class="ms">content_copy</span></button></div>
+        </div>
+      </div>
+    </div></div><div class="cap"><div class="title-s">Shared clipboard</div><div class="body-s v">Search bar · filter chips · 3-line list</div></div></div>
+  </div>
+</section>
+
+<!-- ============ NOTIFICATIONS & MESSAGING ============ -->
+<section class="section">
+  <div class="section-h"><span class="ms">notifications</span><h2 class="headline-s" style="margin:0">Notifications &amp; messaging</h2></div>
+  <div class="phones">
+
+    <!-- NOTIFICATION SYNC -->
+    <div class="ph-wrap"><div class="phone"><div class="scr" data-nav="2">
+      <div class="main">
+        <div class="tab lg"><div class="bar"><button class="ibtn" aria-label="More"><span class="ms">more_vert</span></button></div><div class="ttl headline-m">Sync</div></div>
+        <div class="pad16"><div class="seg" role="group"><button aria-pressed="true" data-seg>Notifications</button><button aria-pressed="false" data-seg>Calls &amp; SMS</button></div></div>
+        <div class="list" style="margin-top:8px">
+          <div class="li"><span class="lead ico"><span class="ms">notifications_active</span></span><span class="t"><span class="h">Show on laptop</span><span class="s">Reply to chats from your computer</span></span><button class="sw" role="switch" aria-checked="true" aria-label="Show on laptop"></button></div>
+          <div class="li"><span class="lead ico"><span class="ms">do_not_disturb_on</span></span><span class="t"><span class="h">Only when screen is off</span><span class="s">Avoid double alerts</span></span><button class="sw" role="switch" aria-checked="false" aria-label="Screen off only"></button></div>
+        </div>
+        <div class="subhead">Apps</div>
+        <div class="chips pad16" style="margin-bottom:4px"><button class="chip filter" aria-pressed="true">Messaging</button><button class="chip filter" aria-pressed="true">Work</button><button class="chip filter" aria-pressed="false">Shopping</button></div>
+        <div class="list">
+          <div class="li"><span class="lead" style="background:var(--p);color:var(--on-p)"><span class="ms f">chat</span></span><span class="t"><span class="h">Messages</span><span class="s">Reply enabled</span></span><button class="sw" role="switch" aria-checked="true" aria-label="Messages"></button></div>
+          <div class="li"><span class="lead" style="background:var(--t);color:var(--on-p)"><span class="ms f">mail</span></span><span class="t"><span class="h">Mail</span><span class="s">Preview only</span></span><button class="sw" role="switch" aria-checked="true" aria-label="Mail"></button></div>
+          <div class="li"><span class="lead" style="background:var(--s);color:var(--on-s)"><span class="ms f">event</span></span><span class="t"><span class="h">Calendar</span><span class="s">Reminders</span></span><button class="sw" role="switch" aria-checked="true" aria-label="Calendar"></button></div>
+          <div class="li"><span class="lead sq"><span class="ms">account_balance</span></span><span class="t"><span class="h">Bank</span><span class="s">Hidden · sensitive</span></span><button class="sw" role="switch" aria-checked="false" aria-label="Bank"></button></div>
+        </div>
+      </div>
+    </div></div><div class="cap"><div class="title-s">Notification sync</div><div class="body-s v">Segmented button · switches with icons · badge</div></div></div>
+
+    <!-- CALLS & SMS -->
+    <div class="ph-wrap"><div class="phone"><div class="scr" data-nav="2">
+      <div class="main">
+        <div class="tab"><button class="ibtn" aria-label="Back"><span class="ms">arrow_back</span></button><span class="title-l">Calls &amp; texts</span></div>
+        <div class="banner"><span class="ms">info</span><div style="display:grid;gap:8px"><div class="body-m">Allow SMS access so you can read and send texts from your laptop.</div><div class="row" style="gap:4px;margin-left:-12px"><button class="btn text">Not now</button><button class="btn text" data-snack="SMS permission granted">Allow</button></div></div></div>
+        <div class="list" style="margin-top:8px">
+          <div class="li"><span class="lead ico"><span class="ms">sms</span></span><span class="t"><span class="h">Text from laptop</span><span class="s">Send and read SMS</span></span><button class="sw" role="switch" aria-checked="true" aria-label="SMS"></button></div>
+          <div class="li"><span class="lead ico"><span class="ms">ring_volume</span></span><span class="t"><span class="h">Incoming call alerts</span><span class="s">Mute ringer from laptop</span></span><button class="sw" role="switch" aria-checked="true" aria-label="Calls"></button></div>
+          <div class="li"><span class="lead ico"><span class="ms">pause_circle</span></span><span class="t"><span class="h">Pause media on call</span><span class="s">Laptop music pauses automatically</span></span><button class="sw" role="switch" aria-checked="true" aria-label="Pause media"></button></div>
+        </div>
+        <div class="subhead">Handled on laptop today</div>
+        <div class="list">
+          <div class="li three"><span class="lead">MR</span><span class="t"><span class="h">Maya Rao</span><span class="s">You replied “Yes! Leaving at 6:30.”</span><span class="tag" style="margin-top:6px"><span class="ms">sms</span>SMS</span></span><span class="trail">9:35</span></div>
+          <div class="li three"><span class="lead" style="background:var(--ec);color:var(--on-ec)"><span class="ms">phone_missed</span></span><span class="t"><span class="h">+91 98123 45678</span><span class="s">Ringer muted from laptop</span><span class="tag err" style="margin-top:6px"><span class="ms">call</span>Missed</span></span><span class="trail">9:12</span></div>
+          <div class="li three"><span class="lead" style="background:var(--tc);color:var(--on-tc)">DV</span><span class="t"><span class="h">Dev</span><span class="s">You replied “Re-running CI now”</span><span class="tag ter" style="margin-top:6px"><span class="ms">chat</span>Messages</span></span><span class="trail">9:02</span></div>
+        </div>
+      </div>
+    </div></div><div class="cap"><div class="title-s">Calls &amp; SMS</div><div class="body-s v">Banner · list with tags · permissions</div></div></div>
+
+    <!-- INCOMING CALL HUD -->
+    <div class="ph-wrap"><div class="phone"><div class="scr" data-nav="none" style="background:transparent">
+      <div class="wall"></div>
+      <div class="main" style="position:relative;z-index:1">
+        <div class="shade" style="padding-top:12px">
+          <div class="notif" style="background:var(--scl);box-shadow:var(--e3)">
+            <div class="hdr"><span class="ai"><span class="ms f">call</span></span>Phone · now</div>
+            <div class="row"><span class="lead" style="width:48px;height:48px;border-radius:50%;background:var(--pc);color:var(--on-pc);display:grid;place-items:center;font-weight:500">MR</span><div style="flex:1"><div class="title-m">Maya Rao</div><div class="body-s v">Incoming call · mobile</div></div></div>
+            <div class="row" style="gap:8px"><button class="btn danger icon" style="flex:1"><span class="ms f">call_end</span>Decline</button><button class="btn filled icon" style="flex:1;background:#1E8E3E;color:#fff"><span class="ms f">call</span>Answer</button></div>
+          </div>
+          <div class="notif">
+            <div class="hdr"><span class="ai"><span class="ms">laptop_chromebook</span></span>Tandem · now</div>
+            <div class="title-s">Laptop is showing this call</div>
+            <div class="body-s v">Mute the ringer or reply with a text from your keyboard.</div>
+          </div>
+        </div>
+      </div>
+    </div></div><div class="cap"><div class="title-s">Call alert</div><div class="body-s v">Heads-up notification mirrored to laptop</div></div></div>
+  </div>
+</section>
+
+<!-- ============ REMOTE CONTROL ============ -->
+<section class="section">
+  <div class="section-h"><span class="ms">touch_app</span><h2 class="headline-s" style="margin:0">Remote control &amp; utilities</h2></div>
+  <div class="phones">
+
+    <!-- TRACKPAD -->
+    <div class="ph-wrap"><div class="phone"><div class="scr" data-nav="3">
+      <div class="main">
+        <div class="tab"><span class="title-l">Remote</span><button class="ibtn" aria-label="Settings"><span class="ms">tune</span></button></div>
+        <div class="pad16" style="margin-bottom:12px"><div class="seg" role="group"><button aria-pressed="true" data-seg>Trackpad</button><button aria-pressed="false" data-seg>Keyboard</button></div></div>
+        <div class="pad" data-pad><div class="hint"><span class="ms" style="font-size:40px">swipe</span><span class="body-m">Slide to move · tap to click<br>Two fingers to scroll</span></div><span class="rail"></span></div>
+        <div class="mouse" style="margin-top:8px"><button data-snack="Left click">Left</button><button data-snack="Right click">Right</button></div>
+        <div class="pad16" style="margin-top:12px"><div class="label-m v">Pointer speed</div><input type="range" min="0" max="100" value="60" aria-label="Pointer speed"></div>
+      </div>
+      <button class="fab fab-pos" style="bottom:100px;right:28px" aria-label="Keyboard" data-snack="Keyboard opened"><span class="ms">keyboard</span></button>
+    </div></div><div class="cap"><div class="title-s">Trackpad &amp; keyboard</div><div class="body-s v">Touch surface · M3 slider · FAB</div></div></div>
+
+    <!-- MEDIA -->
+    <div class="ph-wrap"><div class="phone"><div class="scr" data-nav="3">
+      <div class="main">
+        <div class="tab"><button class="ibtn" aria-label="Back"><span class="ms">keyboard_arrow_down</span></button><span class="title-l" style="text-align:center;padding:0">Playing on laptop</span><button class="ibtn" aria-label="Output"><span class="ms">speaker_group</span></button></div>
+        <div class="art-big"><span class="ms f">graphic_eq</span></div>
+        <div style="padding:16px 24px 0"><div class="headline-s">Night Drive</div><div class="body-l v">Kora Lane · Browser</div></div>
+        <div style="padding:0 24px"><input type="range" min="0" max="225" value="72" aria-label="Seek" data-seek><div class="row body-s v" style="margin-top:-6px"><span class="mono" data-pos>1:12</span><span class="sp mono">3:45</span></div></div>
+        <div class="mctrl" style="margin-top:8px"><button class="sk" aria-label="Previous"><span class="ms f">skip_previous</span></button><button class="play" aria-label="Play or pause" data-play><span class="ms">pause</span></button><button class="sk" aria-label="Next"><span class="ms f">skip_next</span></button></div>
+        <div class="row" style="padding:12px 24px 0"><span class="ms v">volume_down</span><input type="range" min="0" max="100" value="55" aria-label="Laptop volume"><span class="ms v">volume_up</span></div>
+        <div class="chips" style="padding:4px 24px 16px"><button class="chip filter" aria-pressed="true" data-single>Browser</button><button class="chip filter" aria-pressed="false" data-single>Video player</button></div>
+      </div>
+    </div></div><div class="cap"><div class="title-s">Media &amp; volume</div><div class="body-s v">Shape-morphing play button · sliders</div></div></div>
+
+    <!-- PRESENTER -->
+    <div class="ph-wrap"><div class="phone"><div class="scr" data-nav="3">
+      <div class="main">
+        <div class="tab"><button class="ibtn" aria-label="Back"><span class="ms">arrow_back</span></button><span class="title-l">Presenter</span><span class="tag ter" style="margin-right:12px"><span class="ms">timer</span><span class="mono" data-timer>07:12</span></span></div>
+        <div class="card outl" style="margin:0 16px 12px;display:flex;gap:12px;align-items:center"><span class="ms" style="color:var(--p)">slideshow</span><div style="flex:1;min-width:0"><div class="title-s">Q4 roadmap.pdf</div><div class="body-s v">Slide <span data-slide>2</span> of 12</div></div></div>
+        <div class="hold" data-hold><div><span class="ms">ads_click</span><div class="title-m">Hold for pointer</div><div class="body-s" style="opacity:.8">Move the phone to aim</div></div></div>
+        <div class="slidebtns" style="margin-top:12px"><button style="background:var(--sc);color:var(--on-sc)" data-prev><span class="ms">arrow_back</span>Back</button><button style="background:var(--p);color:var(--on-p)" data-next>Next<span class="ms">arrow_forward</span></button></div>
+        <div class="body-s v" style="text-align:center;margin-top:12px">Volume keys also change slides</div>
+      </div>
+    </div></div><div class="cap"><div class="title-s">Presentation remote</div><div class="body-s v">Gyro pointer · large touch targets</div></div></div>
+
+    <!-- COMMANDS -->
+    <div class="ph-wrap"><div class="phone"><div class="scr" data-nav="3">
+      <div class="main">
+        <div class="tab"><button class="ibtn" aria-label="Back"><span class="ms">arrow_back</span></button><span class="title-l">Run commands</span><button class="ibtn" aria-label="Add"><span class="ms">add</span></button></div>
+        <div class="list">
+          <button class="li" data-snack="Laptop locked"><span class="lead"><span class="ms">lock</span></span><span class="t"><span class="h">Lock screen</span><span class="s mono">loginctl lock-session</span></span><span class="ms v">play_arrow</span></button>
+          <button class="li" data-snack="Laptop suspending"><span class="lead"><span class="ms">bedtime</span></span><span class="t"><span class="h">Suspend</span><span class="s mono">systemctl suspend</span></span><span class="ms v">play_arrow</span></button>
+          <button class="li" data-snack="Backup started"><span class="lead"><span class="ms">backup</span></span><span class="t"><span class="h">Start backup</span><span class="s mono">~/bin/backup.sh --quick</span></span><span class="ms v">play_arrow</span></button>
+          <button class="li" data-snack="Screenshot saved on laptop"><span class="lead"><span class="ms">screenshot_monitor</span></span><span class="t"><span class="h">Screenshot</span><span class="s mono">spectacle -b -n</span></span><span class="ms v">play_arrow</span></button>
+          <button class="li" data-dialog><span class="lead" style="background:var(--ec);color:var(--on-ec)"><span class="ms">power_settings_new</span></span><span class="t"><span class="h">Shut down</span><span class="s mono">systemctl poweroff</span></span><span class="ms v">play_arrow</span></button>
+        </div>
+        <div class="body-s v" style="padding:8px 16px">Commands are set up on the laptop in Tandem settings.</div>
+      </div>
+      <div class="scrim" data-scrim></div>
+      <div class="dialog" role="dialog" aria-label="Shut down laptop" data-dlg>
+        <span class="ms hero">power_settings_new</span>
+        <div class="headline-s" style="text-align:center">Shut down laptop?</div>
+        <div class="body-m v">Aryan’s laptop will turn off. Unsaved work in open apps will be lost.</div>
+        <div class="acts"><button class="btn text" data-close>Cancel</button><button class="btn text" style="color:var(--e)" data-close data-snack="Laptop shutting down">Shut down</button></div>
+      </div>
+    </div></div><div class="cap"><div class="title-s">Run commands</div><div class="body-s v">List actions · basic dialog</div></div></div>
+
+    <!-- FIND MY PHONE -->
+    <div class="ph-wrap"><div class="phone"><div class="scr" data-nav="none" style="background:var(--t)">
+      <div class="main" style="position:static">
+        <div class="ringfull" data-ring-screen>
+          <div><div class="label-l" style="opacity:.85">Tandem</div><div class="headline-m" style="margin-top:8px">Aryan’s laptop is looking for this phone</div></div>
+          <div class="pulse"><div class="core"><span class="ms">notifications_active</span></div></div>
+          <div style="width:100%;display:grid;gap:16px">
+            <div class="body-m" style="opacity:.85">Ringing at full volume, even on silent</div>
+            <div class="swipe"><button aria-label="Stop ringing" data-stopring><span class="ms">close</span></button>Swipe or tap to stop</div>
+          </div>
+        </div>
+      </div>
+    </div></div><div class="cap"><div class="title-s">Find my phone</div><div class="body-s v">Full-screen intent · tertiary color role</div></div></div>
+  </div>
+</section>
+
+<!-- ============ CONNECTIVITY ============ -->
+<section class="section">
+  <div class="section-h"><span class="ms">verified_user</span><h2 class="headline-s" style="margin:0">Connectivity &amp; security</h2></div>
+  <div class="phones">
+
+    <!-- DEVICES & CONNECTION -->
+    <div class="ph-wrap"><div class="phone"><div class="scr" data-nav="none">
+      <div class="main">
+        <div class="tab lg"><div class="bar"><button class="ibtn" aria-label="Help"><span class="ms">help</span></button></div><div class="ttl headline-m">Connection</div></div>
+        <div class="subhead">How to reach your laptop</div>
+        <div class="list" role="radiogroup">
+          <button class="li" role="radio" aria-checked="true" data-radio><span class="ms" data-rd>radio_button_checked</span><span class="t"><span class="h">Local Wi‑Fi</span><span class="s">Home‑5G · 192.168.1.24 · 4 ms</span></span><span class="ms v">wifi</span></button>
+          <button class="li" role="radio" aria-checked="false" data-radio><span class="ms" data-rd>radio_button_unchecked</span><span class="t"><span class="h">OpenVPN</span><span class="s">remote-office.ovpn · away from home</span></span><span class="ms v">vpn_lock</span></button>
+        </div>
+        <div class="subhead">Encryption</div>
+        <div class="card filled" style="margin:4px 16px 0;display:grid;gap:12px">
+          <div class="row"><span class="ms" style="color:var(--p)">encrypted</span><div class="title-m" style="flex:1">End‑to‑end TLS 1.3</div><span class="tag"><span class="ms">check</span>Verified</span></div>
+          <div class="fp">A4:7F:19:C2:8B:03:5E:D1<br>90:6A:B7:44:E2:1C:F8:3D</div>
+          <div class="body-s v">Matches the code on Aryan’s laptop.</div>
+        </div>
+        <div class="subhead">Browser extension</div>
+        <div class="list">
+          <div class="li"><span class="lead ico"><span class="ms">extension</span></span><span class="t"><span class="h">Links from browser</span><span class="s">“Send to phone” in right‑click menu</span></span><button class="sw" role="switch" aria-checked="true" aria-label="Links from browser"></button></div>
+          <div class="li"><span class="lead ico"><span class="ms">smart_display</span></span><span class="t"><span class="h">Browser media control</span><span class="s">Play web video from here</span></span><button class="sw" role="switch" aria-checked="true" aria-label="Browser media"></button></div>
+        </div>
+      </div>
+    </div></div><div class="cap"><div class="title-s">Connection &amp; security</div><div class="body-s v">Radio list · filled card · switches</div></div></div>
+
+    <!-- DEVICES / BATTERY -->
+    <div class="ph-wrap"><div class="phone"><div class="scr" data-nav="0">
+      <div class="main">
+        <div class="tab"><button class="ibtn" aria-label="Back"><span class="ms">arrow_back</span></button><span class="title-l">Devices</span></div>
+        <div class="card elev" style="margin:0 16px;display:grid;gap:14px">
+          <div class="row"><span class="lead" style="width:48px;height:48px;border-radius:16px;background:var(--pc);color:var(--on-pc);display:grid;place-items:center"><span class="ms">laptop_chromebook</span></span><div style="flex:1"><div class="title-m">Aryan’s laptop</div><div class="body-s v">Linux · paired 14 Mar</div></div><span class="tag"><span class="ms">wifi</span>Online</span></div>
+          <div><div class="row body-s"><span class="label-m v">This phone’s battery, shared with laptop</span><span class="sp mono">82%</span></div>
+          <div class="battery" style="margin-top:10px" aria-label="Phone battery over last 12 hours"><i style="height:100%"></i><i style="height:96%"></i><i style="height:93%"></i><i style="height:90%"></i><i style="height:88%"></i><i style="height:86%"></i><i style="height:83%"></i><i style="height:79%"></i><i style="height:76%"></i><i style="height:78%"></i><i style="height:80%"></i><i class="now" style="height:82%"></i></div>
+          <div class="row body-s v mono" style="margin-top:4px"><span>−12 h</span><span class="sp">now</span></div></div>
+          <div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn tonal icon" data-snack="Laptop is ringing"><span class="ms">ring_volume</span>Ring laptop</button><button class="btn outlined" data-snack="Pairing removed">Unpair</button></div>
+        </div>
+        <div class="list" style="margin-top:12px">
+          <div class="li"><span class="lead sq"><span class="ms">desktop_windows</span></span><span class="t"><span class="h">Office desktop</span><span class="s">Windows · last seen yesterday</span></span><span class="ms v">chevron_right</span></div>
+          <div class="li"><span class="lead sq"><span class="ms">tablet_android</span></span><span class="t"><span class="h">Pixel Tablet</span><span class="s">Available · tap to pair</span></span><button class="btn tonal" style="height:32px;padding:0 14px">Pair</button></div>
+        </div>
+        <div class="subhead">Works on</div>
+        <div class="chips pad16"><span class="chip assist"><span class="ms">computer</span>Linux</span><span class="chip assist"><span class="ms">desktop_windows</span>Windows</span><span class="chip assist"><span class="ms">laptop_mac</span>macOS</span></div>
+        <div style="height:80px"></div>
+      </div>
+      <button class="fab ext fab-pos" style="bottom:96px"><span class="ms">add_link</span>Pair device</button>
+    </div></div><div class="cap"><div class="title-s">Devices &amp; battery</div><div class="body-s v">Elevated card · battery chart · tonal button</div></div></div>
+
+    <!-- QS / SHADE -->
+    <div class="ph-wrap"><div class="phone"><div class="scr" data-nav="none" style="background:transparent">
+      <div class="wall"></div>
+      <div class="main" style="position:relative;z-index:1">
+        <div class="shade">
+          <div class="row" style="padding:0 6px"><span class="headline-l">9:41</span><span class="sp body-m v">Thu, 19 Nov</span></div>
+          <div class="bright"><i><span class="ms">brightness_6</span></i></div>
+          <div class="qs">
+            <button class="tile on" data-tile><span class="ms">wifi</span><div><b>Internet</b><span>Home‑5G</span></div></button>
+            <button class="tile on" data-tile><span class="ms">sync_alt</span><div><b>Tandem</b><span>Aryan’s laptop</span></div></button>
+            <button class="tile" data-tile><span class="ms">content_paste_go</span><div><b>Send clipboard</b><span>Tandem</span></div></button>
+            <button class="tile" data-tile><span class="ms">do_not_disturb_on</span><div><b>Do not disturb</b><span>Off</span></div></button>
+          </div>
+          <div class="notif">
+            <div class="hdr"><span class="ai"><span class="ms">sync_alt</span></span>Tandem · Aryan’s laptop</div>
+            <div class="title-s">Connected · Wi‑Fi · encrypted</div>
+            <div class="acts"><button data-snack="Clipboard sent">Send clipboard</button><button data-snack="Choose files">Send file</button><button data-snack="Trackpad opened">Trackpad</button></div>
+          </div>
+          <div class="notif">
+            <div class="hdr"><span class="ai" style="background:var(--t)"><span class="ms">music_note</span></span>Tandem · laptop media</div>
+            <div class="row"><div style="flex:1"><div class="title-s">Night Drive</div><div class="body-s v">Kora Lane</div></div><button class="ibtn tonal" aria-label="Previous"><span class="ms f">skip_previous</span></button><button class="ibtn filled" aria-label="Pause" data-toggle-play><span class="ms f">pause</span></button><button class="ibtn tonal" aria-label="Next"><span class="ms f">skip_next</span></button></div>
+          </div>
+          <div class="notif">
+            <div class="hdr"><span class="ai"><span class="ms">download</span></span>Tandem · 2 min ago</div>
+            <div class="title-s">project-brief.pdf received</div>
+            <div class="acts"><button>Open</button><button>Share</button></div>
+          </div>
+        </div>
+      </div>
+    </div></div><div class="cap"><div class="title-s">Quick Settings &amp; notification</div><div class="body-s v">QS tiles · media &amp; ongoing notifications</div></div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-h"><span class="ms">palette</span><h2 class="headline-s" style="margin:0">Color roles in use</h2></div>
+  <div class="legend">
+    <span class="swatch"><i style="background:var(--p)"></i>Primary</span>
+    <span class="swatch"><i style="background:var(--pc)"></i>Primary container</span>
+    <span class="swatch"><i style="background:var(--s)"></i>Secondary</span>
+    <span class="swatch"><i style="background:var(--sc)"></i>Secondary container</span>
+    <span class="swatch"><i style="background:var(--t)"></i>Tertiary</span>
+    <span class="swatch"><i style="background:var(--tc)"></i>Tertiary container</span>
+    <span class="swatch"><i style="background:var(--e)"></i>Error</span>
+    <span class="swatch"><i style="background:var(--surf)"></i>Surface</span>
+    <span class="swatch"><i style="background:var(--sc0)"></i>Surface container</span>
+    <span class="swatch"><i style="background:var(--schh)"></i>Surface container highest</span>
+    <span class="swatch"><i style="background:var(--inv)"></i>Inverse surface</span>
+    <span class="swatch"><i style="background:var(--ol)"></i>Outline</span>
+  </div>
+</section>
+</div>
+
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var NAV=[['home','Home'],['sync_alt','Share'],['notifications','Sync'],['touch_app','Remote']];
+
+  /* chrome: status bar, nav bar, gesture bar, snackbar on every phone */
+  $$('.scr').forEach(function(s){
+    var sb=document.createElement('div');sb.className='sb';
+    sb.innerHTML='<span>9:41</span><span class="cam"></span><span class="r"><span class="ms">signal_cellular_4_bar</span><span class="ms">wifi</span><span class="ms">battery_5_bar</span></span>';
+    s.insertBefore(sb,s.firstChild);
+    var idx=s.dataset.nav;
+    if(idx!=='none'){
+      var nav=document.createElement('nav');nav.className='nav';nav.setAttribute('aria-label','App navigation');
+      NAV.forEach(function(n,i){var b=document.createElement('button');if(String(i)===idx)b.className='on';
+        b.innerHTML='<span class="ind"><span class="ms">'+n[0]+'</span>'+(i===2?'<span class="badge">3</span>':'')+'</span><span class="label-m">'+n[1]+'</span>';
+        b.addEventListener('click',function(){$$('button',nav).forEach(function(x){x.classList.toggle('on',x===b)})});nav.appendChild(b)});
+      s.appendChild(nav);
+    }
+    var gb=document.createElement('div');gb.className='gb';gb.innerHTML='<i></i>';
+    gb.style.background=idx==='none'?'transparent':'var(--sc0)';s.appendChild(gb);
+    var sn=document.createElement('div');sn.className='snack';sn.setAttribute('role','status');sn.innerHTML='<span class="body-m"></span><button class="btn">OK</button>';
+    $('.btn',sn).addEventListener('click',function(){sn.classList.remove('on')});s.appendChild(sn);
+  });
+  function snack(from,msg){var s=$('.snack',from.closest('.scr'));if(!s)return;$('span',s).textContent=msg;s.classList.add('on');clearTimeout(s._t);s._t=setTimeout(function(){s.classList.remove('on')},2400)}
+
+  document.addEventListener('click',function(e){var b=e.target.closest('[data-snack]');if(b)snack(b,b.dataset.snack)});
+
+  /* switches */
+  $$('.sw').forEach(function(s){s.addEventListener('click',function(){s.setAttribute('aria-checked',s.getAttribute('aria-checked')!=='true')})});
+  /* filter chips (multi) and single-select groups */
+  $$('.chip.filter').forEach(function(c){c.addEventListener('click',function(){
+    if(c.hasAttribute('data-single'))$$('[data-single]',c.parentNode).forEach(function(x){x.setAttribute('aria-pressed',x===c)});
+    else c.setAttribute('aria-pressed',c.getAttribute('aria-pressed')!=='true')})});
+  $$('[data-seg]').forEach(function(b){b.addEventListener('click',function(){$$('[data-seg]',b.parentNode).forEach(function(x){x.setAttribute('aria-pressed',x===b)})})});
+  $$('[data-tile]').forEach(function(t){t.addEventListener('click',function(){t.classList.toggle('on')})});
+  $$('[data-radio]').forEach(function(r){r.addEventListener('click',function(){$$('[data-radio]',r.parentNode).forEach(function(x){var on=x===r;x.setAttribute('aria-checked',on);$('[data-rd]',x).textContent=on?'radio_button_checked':'radio_button_unchecked';$('[data-rd]',x).style.color=on?'var(--p)':''});
+    snack(r,r.textContent.indexOf('OpenVPN')>-1?'Connecting through OpenVPN…':'Using local Wi‑Fi')})});
+  $$('[data-radio][aria-checked="true"] [data-rd]').forEach(function(x){x.style.color='var(--p)'});
+
+  /* M3 slider fill */
+  function fill(r){r.style.setProperty('--val',((r.value-r.min)/(r.max-r.min)*100)+'%')}
+  $$('input[type=range]').forEach(function(r){fill(r);r.addEventListener('input',function(){fill(r)})});
+
+  /* transfer ring */
+  var pr=43;setInterval(function(){if(pr>=100)return;pr++;var c=$('[data-ring]');c.setAttribute('stroke-dashoffset',113-113*pr/100);$('[data-ringtxt]').textContent='To laptop · 212 MB · '+pr+'%'},400);
+
+  /* trackpad ripple */
+  $$('[data-pad]').forEach(function(p){p.addEventListener('pointerdown',function(e){var r=p.getBoundingClientRect(),d=document.createElement('span');d.className='rip';d.style.left=(e.clientX-r.left)+'px';d.style.top=(e.clientY-r.top)+'px';p.appendChild(d);setTimeout(function(){d.remove()},450)})});
+
+  /* media */
+  var playing=true,pos=72,seek=$('[data-seek]');
+  function setPlay(){$$('[data-play] .ms,[data-toggle-play] .ms').forEach(function(m){m.textContent=playing?'pause':'play_arrow'});$('[data-play]').classList.toggle('paused',!playing)}
+  $$('[data-play],[data-toggle-play]').forEach(function(b){b.addEventListener('click',function(){playing=!playing;setPlay()})});
+  setInterval(function(){if(!playing)return;pos=(pos+1)%225;seek.value=pos;fill(seek);$('[data-pos]').textContent=Math.floor(pos/60)+':'+('0'+pos%60).slice(-2)},1000);
+  seek.addEventListener('input',function(){pos=+seek.value});
+
+  /* presenter */
+  var sl=2,secs=432;$('[data-next]').addEventListener('click',function(){sl=Math.min(12,sl+1);$('[data-slide]').textContent=sl});
+  $('[data-prev]').addEventListener('click',function(){sl=Math.max(1,sl-1);$('[data-slide]').textContent=sl});
+  setInterval(function(){secs++;$('[data-timer]').textContent=('0'+Math.floor(secs/60)).slice(-2)+':'+('0'+secs%60).slice(-2)},1000);
+  var h=$('[data-hold]');h.addEventListener('pointerdown',function(){h.classList.add('on')});['pointerup','pointerleave','pointercancel'].forEach(function(n){h.addEventListener(n,function(){h.classList.remove('on')})});
+
+  /* dialog */
+  var dlg=$('[data-dlg]'),scrim=$('[data-scrim]');
+  function dOpen(o){dlg.classList.toggle('on',o);scrim.classList.toggle('on',o)}
+  $('[data-dialog]').addEventListener('click',function(){dOpen(true)});
+  $$('[data-close]').forEach(function(b){b.addEventListener('click',function(){dOpen(false)})});scrim.addEventListener('click',function(){dOpen(false)});
+
+  /* find phone */
+  $('[data-stopring]').addEventListener('click',function(e){var s=$('[data-ring-screen]');s.querySelector('.pulse').style.visibility='hidden';s.querySelector('.headline-m').textContent='Ringing stopped';snack(e.currentTarget,'Laptop notified');
+    setTimeout(function(){s.querySelector('.pulse').style.visibility='';s.querySelector('.headline-m').textContent='Aryan’s laptop is looking for this phone'},3000)});
+
+  /* dynamic color + mode */
+  $$('.seed').forEach(function(b){b.addEventListener('click',function(){document.documentElement.style.setProperty('--h',b.dataset.h);$$('.seed').forEach(function(x){x.setAttribute('aria-pressed',x===b)})})});
+  $('#mode').addEventListener('click',function(){var r=document.documentElement,dark=r.dataset.theme==='dark'||(!r.dataset.theme&&matchMedia('(prefers-color-scheme: dark)').matches);r.dataset.theme=dark?'light':'dark';$('#mode .ms').textContent=dark?'dark_mode':'light_mode'});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Debug builds only: lets adb start a share from files in the app's external files dir. -->
+    <application>
+        <activity
+            android:name="app.tandem.debug.SendTestActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.Tandem.Transparent">
+            <intent-filter>
+                <action android:name="app.tandem.debug.SEND_TEST" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tandem</string>
+    <string name="tile_send_clipboard">Send clipboard</string>
+    <string name="share_target_label">Send with Tandem</string>
+
+    <string name="action_back">Back</string>
+    <string name="action_cancel">Cancel</string>
+
+    <!-- Bottom navigation -->
+    <string name="tab_home">Home</string>
+    <string name="tab_share">Share</string>
+    <string name="tab_sync">Sync</string>
+    <string name="tab_remote">Remote</string>
+
+    <!-- Home -->
+    <string name="home_search">Search</string>
+    <string name="home_devices">Devices</string>
+    <string name="home_fab_send">Send</string>
+    <string name="home_no_device">No device connected</string>
+    <string name="home_connected_status">Connected · Wi‑Fi · encrypted</string>
+    <string name="home_not_connected_status">Not connected</string>
+    <string name="home_metric_battery">Laptop battery</string>
+    <string name="home_metric_latency">Latency</string>
+    <string name="home_charging">Charging</string>
+    <string name="home_latency_route">Home‑5G</string>
+    <string name="home_qa_send_file">Send file</string>
+    <string name="home_qa_clipboard">Clipboard</string>
+    <string name="home_qa_trackpad">Trackpad</string>
+    <string name="home_qa_lock_pc">Lock PC</string>
+    <string name="home_laptop_locked">Laptop locked</string>
+    <string name="home_now_playing_on_laptop">%1$s · playing on laptop</string>
+    <string name="home_today">Today</string>
+    <string name="value_unknown">—</string>
+    <string name="value_ms">%1$d ms</string>
+
+    <!-- Share and transfers -->
+    <string name="share_title">Share</string>
+    <string name="share_link_label">Link to open on laptop</string>
+    <string name="share_send_link">Send link</string>
+    <string name="share_link_sent">Link sent to laptop</string>
+    <string name="share_no_device">No device is connected to send to</string>
+    <string name="share_text_copied">Copied to clipboard</string>
+    <string name="share_files_unreadable">Could not read the files to send</string>
+    <string name="share_target_link">Link</string>
+    <string name="share_link_invalid">Enter a link to send</string>
+    <string name="share_transfers">Transfers</string>
+    <string name="share_cancel_transfer">Cancel transfer</string>
+    <string name="share_storage_header">Phone storage on laptop</string>
+    <string name="transfer_sending">To laptop · %1$s · %2$d%%</string>
+    <string name="transfer_sent">Sent to laptop · %1$s</string>
+    <string name="transfer_received">Received · %1$s</string>
+    <string name="transfer_received_plain">Received</string>
+    <string name="transfer_link_opened">From laptop · opened</string>
+    <string name="transfer_link_sent">To laptop · link sent</string>
+    <string name="transfer_receiving">From laptop · %1$s · %2$d%%</string>
+    <string name="transfer_cancelled">Cancelled</string>
+    <string name="transfer_failed">Failed</string>
+    <string name="storage_browse_title">Let laptop browse files</string>
+    <string name="storage_browse_body">Mounted as ~/Phone over SFTP</string>
+    <string name="storage_used">%1$d GB used</string>
+    <string name="storage_total">%1$d GB</string>
+    <string name="storage_add_folder">Folder</string>
+
+    <!-- Shared clipboard (Share tab card and Clipboard screen) -->
+    <string name="clipboard_shared_title">Shared clipboard</string>
+    <string name="clipboard_shared_body">Copy on one device, paste on the other</string>
+    <string name="clipboard_send_current">Send current clipboard</string>
+    <string name="clipboard_title">Clipboard</string>
+    <string name="clipboard_search">Search clipboard</string>
+    <string name="clipboard_filter_all">All</string>
+    <string name="clipboard_filter_laptop">From laptop</string>
+    <string name="clipboard_filter_phone">From phone</string>
+    <string name="clipboard_copy_item">Copy</string>
+    <string name="clipboard_copied">Copied</string>
+
+    <!-- Share sheet target -->
+    <plurals name="share_items_count">
+        <item quantity="one">%d file</item>
+        <item quantity="other">%d files</item>
+    </plurals>
+    <string name="share_target_text">Text</string>
+    <string name="share_target_subtitle">Sent with Tandem</string>
+    <string name="share_target_header">Send with Tandem</string>
+    <string name="share_target_no_devices">No paired devices yet. Pair a computer first.</string>
+    <string name="share_target_online">Online</string>
+    <string name="share_target_offline">Offline</string>
+    <string name="share_target_sending">Sending %1$s to %2$s</string>
+
+    <!-- Sync -->
+    <string name="sync_title">Sync</string>
+    <string name="sync_tab_notifications">Notifications</string>
+    <string name="sync_tab_calls">Calls and SMS</string>
+    <string name="sync_show_on_laptop">Show on laptop</string>
+    <string name="sync_show_on_laptop_body">Reply to chats from your computer</string>
+    <string name="sync_screen_off_only">Only when screen is off</string>
+    <string name="sync_screen_off_only_body">Avoid double alerts</string>
+    <string name="sync_apps_header">Apps</string>
+    <string name="sync_category_messaging">Messaging</string>
+    <string name="sync_category_work">Work</string>
+    <string name="sync_category_shopping">Shopping</string>
+    <string name="calls_sms_permission_message">Allow SMS access so you can read and send texts from your laptop.</string>
+    <string name="calls_sms_allow">Allow</string>
+    <string name="calls_sms_not_now">Not now</string>
+    <string name="calls_text_from_laptop">Text from laptop</string>
+    <string name="calls_text_from_laptop_body">Read and send texts from your laptop</string>
+    <string name="calls_incoming_alerts">Incoming call alerts</string>
+    <string name="calls_incoming_alerts_body">Show calls on your laptop, and mute the ringer from there</string>
+    <string name="calls_pause_media">Pause media on call</string>
+    <string name="calls_pause_media_body">Pause the laptop\'s player while a call rings</string>
+    <string name="calls_handled_header">Handled on laptop today</string>
+    <string name="calls_tag_sms">SMS</string>
+    <string name="calls_tag_missed">Missed</string>
+    <string name="calls_tag_messages">Messages</string>
+
+    <!-- Remote -->
+    <string name="remote_title">Remote</string>
+    <string name="remote_presenter">Presenter</string>
+    <string name="remote_commands">Run commands</string>
+    <string name="remote_mode_trackpad">Trackpad</string>
+    <string name="remote_mode_keyboard">Keyboard</string>
+    <string name="remote_keyboard">Keyboard</string>
+    <string name="remote_trackpad_hint">Slide to move · tap to click · tap twice to double-click\nTwo fingers to scroll · hold, then drag</string>
+    <string name="remote_left_click">Left</string>
+    <string name="remote_right_click">Right</string>
+    <string name="remote_pointer_speed">Pointer speed</string>
+    <string name="remote_type_label">Type on laptop</string>
+    <string name="remote_send_text">Send text</string>
+    <string name="remote_keyboard_hint">Text is typed on the laptop where the cursor is.</string>
+
+    <string name="media_playing_on_laptop">Playing on laptop</string>
+    <string name="media_artist_source">%1$s · %2$s</string>
+    <string name="media_play">Play</string>
+    <string name="media_pause">Pause</string>
+    <string name="media_previous">Previous</string>
+    <string name="media_next">Next</string>
+
+    <string name="presenter_title">Presenter</string>
+    <string name="presenter_reset_timer">Reset timer</string>
+    <string name="presenter_slide_of">Slide %1$d of %2$d</string>
+    <string name="presenter_hold_title">Hold for pointer</string>
+    <string name="presenter_pointer_active">Pointing</string>
+    <string name="presenter_hold_body">Hold, then turn the phone to aim</string>
+    <string name="presenter_slide">Slide %1$d</string>
+    <string name="presenter_start">Start slideshow</string>
+    <string name="presenter_end">End slideshow</string>
+    <string name="presenter_back">Back</string>
+    <string name="presenter_next">Next</string>
+    <string name="presenter_volume_keys">Volume keys also change slides</string>
+
+    <string name="commands_title">Run commands</string>
+    <string name="commands_sent">%1$s sent to laptop</string>
+    <string name="commands_setup_note">Commands are set up on the laptop, in KDE Connect settings.</string>
+    <string name="commands_empty">No commands yet. Connect to your laptop and add some there.</string>
+    <string name="commands_add_on_laptop">Add commands on laptop</string>
+    <string name="commands_confirm_title">Run “%1$s”?</string>
+    <string name="commands_confirm_body">This runs on your laptop and may close apps or lose unsaved work.</string>
+    <string name="commands_confirm_run">Run</string>
+
+    <!-- Find my phone -->
+    <string name="find_default_device">Your laptop</string>
+    <string name="find_title">%1$s is looking for this phone</string>
+    <string name="find_ringing_body">Ringing at full volume, even on silent</string>
+    <string name="find_stop">Stop ringing</string>
+    <string name="find_swipe_hint">Swipe or tap to stop</string>
+
+    <!-- Connection and security -->
+    <string name="security_title">Connection</string>
+    <string name="security_reach_header">How to reach your laptop</string>
+    <string name="security_encryption_header">Encryption</string>
+    <string name="security_extension_header">Browser extension</string>
+    <string name="security_tls_version">End-to-end %1$s</string>
+    <string name="security_tls_default">End-to-end TLS</string>
+    <string name="security_verified">Verified</string>
+    <string name="security_matches">Matches the code on %1$s.</string>
+    <string name="security_links_title">Links from browser</string>
+    <string name="security_links_body">“Send to phone” in right-click menu</string>
+    <string name="security_media_title">Browser media control</string>
+    <string name="security_media_body">Play web video from here</string>
+
+    <!-- Devices -->
+    <string name="devices_title">Devices</string>
+    <string name="devices_pick_one">Choose a device to see its details.</string>
+    <string name="devices_refresh">Refresh devices</string>
+    <string name="devices_empty">No devices yet. Make sure this phone and your computer are on the same Wi‑Fi network.</string>
+    <string name="devices_none_nearby">No nearby devices to pair</string>
+    <string name="devices_gone">That device is no longer known</string>
+    <string name="devices_paired_subtitle">%1$s · paired</string>
+    <string name="devices_online">Online</string>
+    <string name="devices_offline">Offline</string>
+    <string name="devices_battery_label">Laptop battery</string>
+    <string name="devices_history_start">−12 h</string>
+    <string name="devices_history_now">now</string>
+    <string name="devices_ring">Ring laptop</string>
+    <string name="devices_ringing">Laptop is ringing</string>
+    <string name="devices_unpair">Unpair</string>
+    <string name="devices_pair">Pair</string>
+    <string name="devices_pair_fab">Pair device</string>
+    <string name="devices_works_on">Works on</string>
+    <string name="devices_os_linux">Linux</string>
+    <string name="devices_os_windows">Windows</string>
+    <string name="devices_os_macos">macOS</string>
+    <string name="device_status_paired_reachable">Paired and reachable</string>
+    <string name="device_status_reachable">Reachable, not paired</string>
+    <string name="device_status_paired_offline">Paired, not connected</string>
+    <string name="device_status_nearby">Nearby</string>
+    <string name="sync_access_message">Allow notification access so Tandem can show your phone\'s notifications on the laptop.</string>
+    <string name="sync_access_allow">Open settings</string>
+    <string name="remote_middle_click">Middle</string>
+    <string name="remote_modifiers">Hold with the next key</string>
+    <string name="remote_keys">Keys</string>
+    <string name="remote_mod_ctrl">Ctrl</string>
+    <string name="remote_mod_alt">Alt</string>
+    <string name="remote_mod_shift">Shift</string>
+    <string name="remote_mod_super">Super</string>
+    <string name="remote_key_esc">Esc</string>
+    <string name="remote_key_esc_d">Escape</string>
+    <string name="remote_key_tab">Tab</string>
+    <string name="remote_key_tab_d">Tab</string>
+    <string name="remote_key_enter">Enter</string>
+    <string name="remote_key_enter_d">Enter</string>
+    <string name="remote_key_backspace">Bksp</string>
+    <string name="remote_key_backspace_d">Backspace</string>
+    <string name="remote_key_delete">Del</string>
+    <string name="remote_key_delete_d">Delete</string>
+    <string name="remote_key_left">←</string>
+    <string name="remote_key_left_d">Arrow left</string>
+    <string name="remote_key_up">↑</string>
+    <string name="remote_key_up_d">Arrow up</string>
+    <string name="remote_key_down">↓</string>
+    <string name="remote_key_down_d">Arrow down</string>
+    <string name="remote_key_right">→</string>
+    <string name="remote_key_right_d">Arrow right</string>
+    <string name="remote_key_home">Home</string>
+    <string name="remote_key_home_d">Home</string>
+    <string name="remote_key_end">End</string>
+    <string name="remote_key_end_d">End</string>
+    <string name="remote_key_pgup">PgUp</string>
+    <string name="remote_key_pgup_d">Page up</string>
+    <string name="remote_key_pgdn">PgDn</string>
+    <string name="remote_key_pgdn_d">Page down</string>
+    <string name="calls_phone_permission_message">Allow phone, call log and contacts access so Tandem can show who is calling on your laptop.</string>
+    <string name="calls_phone_allow">Allow</string>
+    <string name="storage_needs_access">Allow "all files access" for Tandem, or the laptop cannot see these folders.</string>
+    <string name="storage_allow_access">Allow access</string>
+    <string name="storage_add_title">Share a folder</string>
+    <string name="storage_none_to_add">There are no more folders to share.</string>
+    <string name="storage_remove_folder">Stop sharing %1$s</string>
+</resources>

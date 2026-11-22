@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<resources>
+    <!-- Android 12+: the icon background follows the wallpaper accent, like the rest of the app. -->
+    <color name="ic_launcher_background">@android:color/system_accent1_600</color>
+</resources>

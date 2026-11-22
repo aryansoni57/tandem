@@ -1,0 +1,44 @@
+# Detekt overrides on top of the defaults (buildUponDefaultConfig = true).
+build:
+  maxIssues: 0
+style:
+  MagicNumber:
+    active: false
+  WildcardImport:
+    active: true
+  MaxLineLength:
+    maxLineLength: 120
+  LoopWithTooManyJumpStatements:
+    maxJumpCount: 3
+  ThrowsCount:
+    max: 4
+    excludeGuardClauses: true
+  ReturnCount:
+    max: 6
+    excludeGuardClauses: true
+complexity:
+  LongParameterList:
+    functionThreshold: 6
+    constructorThreshold: 8
+    ignoreAnnotated: ['Composable']
+    ignoreDefaultParameters: true
+  LongMethod:
+    threshold: 80
+    ignoreAnnotated: ['Composable']
+  TooManyFunctions:
+    thresholdInClasses: 30
+    thresholdInInterfaces: 20
+    thresholdInFiles: 30
+    ignoreAnnotated: ['Composable']
+  NestedBlockDepth:
+    threshold: 5
+  LargeClass:
+    threshold: 800
+  CyclomaticComplexMethod:
+    threshold: 20
+    ignoreSimpleWhenEntries: true
+naming:
+  TopLevelPropertyNaming:
+    constantPattern: '[A-Z][A-Za-z0-9_]*'
+  FunctionNaming:
+    ignoreAnnotated: ['Composable']
